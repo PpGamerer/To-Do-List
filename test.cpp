@@ -6,7 +6,7 @@
 #include <map>
 using namespace std;
 
-void prettyPrint(vector<map<string, string>> data, vector<string> keys) {
+void TodoList_table(vector<map<string, string>> data, vector<string> keys) {
     int data_size = data.size();
     int column_count = keys.size();
     int* col_sizes = new int[column_count];
@@ -20,24 +20,24 @@ void prettyPrint(vector<map<string, string>> data, vector<string> keys) {
     }
 
     for (int i = 0; i < column_count; i++) {
-        cout << setw(col_sizes[i]) << left << keys.at(i) << setw(NULL) << "|";
+        cout << setw(col_sizes[i]) << left << keys.at(i) << setw(1) << "|";
     }
     cout << endl;
 
     for (int i = 0; i < data_size; i++) {
         for (int j = 0; j < column_count; j++) {
-            cout << setw(col_sizes[j]) << setfill('-') << "" << setw(NULL) << setfill(' ') << "|";
+            cout << setw(col_sizes[j]) << setfill('-') << "" << setw(1) << setfill(' ') << "|";
         }
         cout << endl;
         for (int j = 0; j < column_count; j++) {
-            cout << setw(col_sizes[j]) <<left << data[i][keys.at(j)] << setw(NULL) << "|";
+            cout << setw(col_sizes[j]) <<left << data[i][keys.at(j)] << setw(1) << "|";
         }
         cout << endl;
     }
 
 }
 
-//["name", "age", "class"]
+//["ID", "All To Dos", "Status", "Category", "Due Date", "Remarks"]
 vector<string> tokens(string s, string delimiter) {
     vector<string> v;
     size_t pos = 0;
@@ -74,5 +74,5 @@ int main()
         data.push_back(myMap);
     }
 
-    prettyPrint(data, keys);
+    TodoList_table(data, keys);
 }
