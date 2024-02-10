@@ -3,7 +3,6 @@
 #include <fstream>
 using namespace std;
 
-string category;
 void Viewalltdfromctgr(){
     cout << "All task that is not complete.";
     ifstream task;
