@@ -26,7 +26,12 @@ int searchData() {
         read >> todo.id;
         read.ignore();
         getline(read, todo.task);
-        if (todo.id == id) 
+        if (todo.id == 1) 
+        {
+            print(todo);
+            return id;
+        }
+        else
         {
             print(todo);
             return id;
