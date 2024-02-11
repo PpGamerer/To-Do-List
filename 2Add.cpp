@@ -30,7 +30,7 @@ int main()
         }
         else 
         {
-             cout << "Add a Remarks? y/n : ";
+            cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
             getline(cin,input);
         }
         
@@ -63,12 +63,12 @@ int main()
         }
         else 
         {
-            cout << "Add a Due Date? y/n : ";
+            cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
             getline(cin,input);
         }
         
 
-        
+
     }
 
 }
