@@ -26,7 +26,7 @@ int main()
     while (getline(read, textline)) { //อ่านทีละแถวจนหมดไฟล์
         row = tokens(textline, ",");  //delimiter = ","
         myMap.clear(); //เคลียร์mapก่อนpair
-        for (int i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
+        for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
             myMap.insert(pair<string, string>(keys.at(i),row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
         }
         data.push_back(myMap);
@@ -37,10 +37,10 @@ int main()
 void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //data เก็บ myMap ทุกแถวไว้, keys เก็บหัวข้อของทุกประเภทไว้อยู่
     int data_count = data.size(); //จำนวนแถวข้อมูลทั้งหมด(จำนวนmyMap)
     int col_count = keys.size(); //จำนวนคอลัมน์ข้อมูล(จำนวนประเภทข้อมูล)
-    vector<int> col_sizes(col_count);
-    for (int i = 0; i < col_count; i++) { //หา column size ที่มากที่สุด ของแต่ละคอลัมน์
+    vector<unsigned int> col_sizes(col_count);
+    for (size_t i = 0; i < col_count; i++) { //หา column size ที่มากที่สุด ของแต่ละคอลัมน์
         col_sizes[i] = keys.at(i).length(); //ความยาวของข้อมูลที่ i
-        for (int j = 0; j < data_count; j++) {
+        for (size_t j = 0; j < data_count; j++) {
             if (col_sizes[i] < data[j][keys.at(i)].length()) {
                 col_sizes[i] = data[j][keys.at(i)].length(); //ถ้ามากกว่าข้อมูลที่ i ให้แทนค่านั้นเป็น column size
             }
