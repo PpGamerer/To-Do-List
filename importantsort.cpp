@@ -49,18 +49,18 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
             }
         }
     }
-//ขอบตารางบน----
+    //ขอบตารางบน----
     for (int i = 0; i < col_count; i++) {
             std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
         } 
     std::cout << endl;
-//ประเภทข้อมูล(ข้อมูลแถวแรก)
+    //ประเภทข้อมูล(ข้อมูลแถวแรก)
     for (int i = 0; i < col_count; i++) {
         std::cout  << setw(col_sizes[i]) << left << keys.at(i)  << "|";
     }
     std::cout << endl;
-    
- //sort by priority
+
+    //sort by priority
     sort(data.begin(), data.end(), [&](const auto& a, const auto& b) {
     auto priorityCheck = [&](const auto& row) {
         return row.at(keys.back()) == "!";
@@ -68,7 +68,13 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
     bool isAPriority = priorityCheck(a);
     bool isBPriority = priorityCheck(b);
 
-    if (isAPriority && !isBPriority) {
+    bool isANonPriority = !isAPriority;
+    bool isBNonPriority = !isBPriority;
+
+    if (isANonPriority && isBNonPriority) {
+        // If both a and b are non-priority, prioritize the latest added (come last)
+        return find(data.begin(), data.end(), a) < find(data.begin(), data.end(), b);
+    } else if (isAPriority && !isBPriority) {
         return true;  // a has priority, so it should come before b
     } else if (!isAPriority && isBPriority) {
         return false; // b has priority, so it should come before a
@@ -76,19 +82,18 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
         // No priority markers for both rows or both have it, sort based on last column
         return a.at(keys.back()) > b.at(keys.back());
     }});
-    
-//ขอบตารางและข้อมูลในตาราง --|--
-      for (int i = 0; i < data_count; i++) {
+
+    //ขอบตารางและข้อมูลในตาราง --|--
+    for (int i = 0; i < data_count; i++) {
         for (int j = 0; j < col_count; j++) {
-            cout << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
+            std::cout << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
         }
-        cout << endl;
+        std::cout << endl;
         for (int j = 0; j < col_count; j++) {
-            cout << setw(col_sizes[j]) << left << data[i][keys.at(j)] << "|";
+            std::cout << setw(col_sizes[j]) << left << data[i][keys.at(j)] << "|";
         }
-        cout << endl; 
+        std::cout << endl; 
     }
- 
     //ขอบตารางล่าง----
     for (int i = 0; i < col_count; i++) {
             std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
@@ -96,7 +101,7 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
     std::cout << endl;
 }
 
-//["ID", "All To Dos", "Status", "Category", "Due Date", "Remarks"]
+//["ID", "All To Dos", "Status", "Category", "Due Date", "Remarks", "!"]
 vector<string> tokens(string text,string delimiter) { //แยกข้อมูลตามตัวคั่น (delimiter)
     vector<string> key;
     size_t found;
@@ -183,7 +188,7 @@ void getUserInput() {
         input = "None";
         newEntry.push_back(input);
     }
-
+    
     std::cout << "Mark as important? (y/n) : ";
     getline(cin, input);
     while(input!="y" && input!="Y" && input!="n" && input!="N"){
