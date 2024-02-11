@@ -4,6 +4,7 @@
 #include <map>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 using namespace std;
 
 //prototype functions
@@ -55,6 +56,7 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
         cout << setw(col_sizes[i]) << left << keys.at(i)  << "|";
     }
     cout << endl;
+
     //ขอบตารางและข้อมูลในตาราง --|--
     for (int i = 0; i < data_count; i++) {
         for (int j = 0; j < col_count; j++) {
