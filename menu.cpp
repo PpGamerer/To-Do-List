@@ -56,7 +56,7 @@ int main() {
     int choice;
     string taskName;
     
-    cout << "Tasks To Do " << endl;
+    cout << "To-Do List " << endl;
     
     do {
         cout << "------------\n1-To Add Task\n2-Display List\n3-Delete Task\n4-Complete Task\n0-Exit\nEnter your choice: ";
