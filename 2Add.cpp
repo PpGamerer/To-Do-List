@@ -100,6 +100,10 @@ int main()
     }else if(input=="n" || input == "N"){
         input = "None";
         newEntry.push_back(input);
+
+
+
+        
     }
     */
     
