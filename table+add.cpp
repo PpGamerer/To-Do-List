@@ -96,13 +96,15 @@ void addTodo(const string& filename, const vector<string>& entry) {
     // Open the file in append mode
     ofstream file(filename, ios::app);
     // Write the entry to the file
-    for (const auto& field : entry) {
-        file << field << ",";
-    }
+    for (size_t i = 0; i < entry.size(); ++i) {
+        file << entry[i];
+        if (i < entry.size()-1) {
+            file << ","; //เพิ่ม , ถ้าไม่ใช่ข้อมูลสุดท้าย
+        }}
     file << endl;
     file.close();
 
-    std::cout << "New entry added to " << filename << " successfully." << endl;
+    std::cout << "New entry added to To-Do List successfully." << endl;
 }
 
 void getUserInput() {  
@@ -124,8 +126,6 @@ void getUserInput() {
     std::cout << "Add a Category? (y/n) : ";
     getline(cin, input);
     while(true){
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
     std::cout << "Enter Category: ";
     getline(cin, input);
@@ -136,13 +136,13 @@ void getUserInput() {
         newEntry.push_back(input);
         break;
     }
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
     }
 
     std::cout << "Add a Due Date? (y/n) : ";
     getline(cin, input);
     while(true){
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
     std::cout << "Ender a Due Date : ";
     getline(cin, input);
@@ -153,13 +153,13 @@ void getUserInput() {
         newEntry.push_back(input);
         break;
     }
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
     }
 
     std::cout << "Add a Remarks? (y/n) : ";
     getline(cin, input);
     while(true){
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
     std::cout << "Enter Remarks: ";
     getline(cin, input);
@@ -170,13 +170,13 @@ void getUserInput() {
         newEntry.push_back(input);
         break;
     }
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
     }
     
     std::cout << "Mark as important? (y/n) : ";
     getline(cin, input);
     while(true){
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
         input = "!";
         newEntry.push_back(input);
@@ -186,6 +186,8 @@ void getUserInput() {
         newEntry.push_back(input);
         break;
     }
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
     }
 
     // Add the new entry to the data.csv file
