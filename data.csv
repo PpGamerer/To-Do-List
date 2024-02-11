@@ -1,9 +1,10 @@
 ID,All To Dos,Status,Category,Due Date,Remarks,!
 1,do homework,undone,school,No date,None,!
-2,clean a house and wash dishes,done,housework,07/02/2024,put in a dishwasher,
+2,clean a house and wash dishes,done,housework,07/02/2024,put in a dishwasher,,
 3,run an errand,undone,no category,11/02/2024,None,!
-55,laughing out loud,undone,No category,Today,None,
+55,laughing out loud,undone,No category,Today,None,,
 7,sleeping,undone,No category,Today,sleeping 10 hours a day,!
-10,nothing,undone,No category,No date,None,
-99,satu,undone,god,No date,satu99,
-888,uno,undone,game,No date,playy,
+10,nothing,undone,No category,No date,None,,
+99,satu,undone,god,No date,None,!,
+123,eiei,undone,No category,No date,None, ,
+789,hoho,undone,No category,No date,None, ,
