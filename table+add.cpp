@@ -4,6 +4,7 @@
 #include <map>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 using namespace std;
 
 //prototype functions
@@ -58,6 +59,7 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
         std::cout  << setw(col_sizes[i]) << left << keys.at(i)  << "|";
     }
     std::cout << endl;
+
     //ขอบตารางและข้อมูลในตาราง --|--
     for (int i = 0; i < data_count; i++) {
         for (int j = 0; j < col_count; j++) {
@@ -76,7 +78,7 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
     std::cout << endl;
 }
 
-//["ID", "All To Dos", "Status", "Category", "Due Date", "Remarks"]
+//["ID", "All To Dos", "Status", "Category", "Due Date", "Remarks", "!"]
 vector<string> tokens(string text,string delimiter) { //แยกข้อมูลตามตัวคั่น (delimiter)
     vector<string> key;
     size_t found;
@@ -161,6 +163,20 @@ void getUserInput() {
     newEntry.push_back(input);
     }else if(input=="n" || input == "N"){
         input = "None";
+        newEntry.push_back(input);
+    }
+    
+    std::cout << "Mark as important? (y/n) : ";
+    getline(cin, input);
+    while(input!="y" && input!="Y" && input!="n" && input!="N"){
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
+    }
+    if(input=="y" || input == "Y"){
+        input = "!";
+        newEntry.push_back(input);
+    }else if(input=="n" || input == "N"){
+        input = " ";
         newEntry.push_back(input);
     }
 
