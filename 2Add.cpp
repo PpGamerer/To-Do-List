@@ -67,6 +67,8 @@ int main()
             getline(cin,input);
         }
         
+
+        
     }
 
 }
@@ -103,7 +105,7 @@ int main()
 
 
 
-        
+
     }
     */
     
