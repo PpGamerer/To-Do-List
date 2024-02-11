@@ -37,10 +37,10 @@ int main()
 void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //data เก็บ myMap ทุกแถวไว้, keys เก็บหัวข้อของทุกประเภทไว้อยู่
     size_t data_count = data.size(); //จำนวนแถวข้อมูลทั้งหมด(จำนวนmyMap)
     size_t col_count = keys.size(); //จำนวนคอลัมน์ข้อมูล(จำนวนประเภทข้อมูล)
-    vector<unsigned int> col_sizes(col_count);
-    for (size_t i = 0; i < col_count; i++) { //หา column size ที่มากที่สุด ของแต่ละคอลัมน์
+    vector<size_t> col_sizes(col_count);
+    for (size_t i = 0; static_cast<int>(i) < col_count; i++) { //หา column size ที่มากที่สุด ของแต่ละคอลัมน์
         col_sizes[i] = keys.at(i).length(); //ความยาวของข้อมูลที่ i
-        for (size_t j = 0; j < data_count; j++) {
+        for (size_t j = 0; static_cast<int>(j) < data_count; j++) {
             if (col_sizes[i] < data[j][keys.at(i)].length()) {
                 col_sizes[i] = data[j][keys.at(i)].length(); //ถ้ามากกว่าข้อมูลที่ i ให้แทนค่านั้นเป็น column size
             }
