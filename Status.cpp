@@ -39,7 +39,6 @@ int main()
 
     // Find and display tasks with the specified status
     findTodoByStatus(data, keys, statusToFind);
-    getUserInput();
     
 }
 
@@ -109,7 +108,4 @@ void findTodoByStatus(const vector<map<string, string>>& data, const vector<stri
             TodoList_table(filteredData, keys);
         }
     }
-
-    // Prompt user for new input
-    getUserInput();
 }
