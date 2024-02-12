@@ -16,34 +16,33 @@ void TodoList_table(vector<map<string,string>> data, vector<string> keys);
 int main()
 {
     map<string,string> myMap;
-    vector<map<string,string>> data; //เก็บ myMap แต่ละแถวไว้ใน data
+    vector<map<string,string>> data; //เก็บ myMap(คู่) แต่ละแถวไว้ใน data
     string textline;
     ifstream read;
 
     read.open("data.csv");
     getline(read,textline); //บรรทัดแรก (หัวข้อประเภท)
-    vector<string> keys = tokens(textline, ","); //delimiter = ","
+    vector<string> keys = tokens(textline, ","); //delimiter = "," เก็บหัวข้อไว้
     vector<string> row;
     while (getline(read, textline)) { //อ่านทีละแถวจนหมดไฟล์
-        row = tokens(textline, ",");  //delimiter = ","
+        row = tokens(textline, ",");  //delimiter = "," ได้ข้อมูลแต่ละแถว
         myMap.clear(); //เคลียร์mapก่อนpair
-        for (int i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
-            myMap.insert(pair<string, string>(keys.at(i),row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
+        for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
+            myMap.insert(pair<string, string>(keys.at(i),row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์(จับคู่ตามหัวข้อ)
         }
         data.push_back(myMap);
     }
     TodoList_table(data,keys);
     getUserInput();
-    
 }
 
 void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //data เก็บ myMap ทุกแถวไว้, keys เก็บหัวข้อของทุกประเภทไว้อยู่
-    int data_count = data.size(); //จำนวนแถวข้อมูลทั้งหมด(จำนวนmyMap)
-    int col_count = keys.size(); //จำนวนคอลัมน์ข้อมูล(จำนวนประเภทข้อมูล)
-    vector<int> col_sizes(col_count);
-    for (int i = 0; i < col_count; i++) { //หา column size ที่มากที่สุด ของแต่ละคอลัมน์
-        col_sizes[i] = keys.at(i).length(); //ความยาวของข้อมูลที่ i
-        for (int j = 0; j < data_count; j++) {
+    size_t data_count = data.size(); //จำนวนแถวข้อมูลทั้งหมด(จำนวนmyMap)
+    size_t col_count = keys.size(); //จำนวนคอลัมน์ข้อมูล(จำนวนประเภทข้อมูล)
+    vector<size_t> col_sizes(col_count);
+    for (size_t i = 0; static_cast<int>(i) < col_count; i++) { //หา column size ที่มากที่สุด ของแต่ละคอลัมน์ *ข้อมูลจะได้ไม่เกินขอบตาราง*
+        col_sizes[i] = keys.at(i).length(); //ความยาวของข้อมูลที่ key ที่ i
+        for (size_t j = 0; static_cast<int>(j) < data_count; j++) {
             if (col_sizes[i] < data[j][keys.at(i)].length()) {
                 col_sizes[i] = data[j][keys.at(i)].length(); //ถ้ามากกว่าข้อมูลที่ i ให้แทนค่านั้นเป็น column size
             }
@@ -62,24 +61,24 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
 
     //sort by priority
     sort(data.begin(), data.end(), [&](const auto& a, const auto& b) {
-    auto priorityCheck = [&](const auto& row) {
+    auto Check = [&](const auto& row) {
         return row.at(keys.back()) == "!";
     };
-    bool isAPriority = priorityCheck(a);
-    bool isBPriority = priorityCheck(b);
+    bool isAPriority = Check(a);
+    bool isBPriority = Check(b);
 
-    bool isANonPriority = !isAPriority;
+    bool isANonPriority = !isAPriority; 
     bool isBNonPriority = !isBPriority;
 
     if (isANonPriority && isBNonPriority) {
-        // If both a and b are non-priority, prioritize the latest added (come last)
-        return find(data.begin(), data.end(), a) < find(data.begin(), data.end(), b);
+        // ถ้าไม่มีทั้งคู่ให้เรียงอันที่เพิ่มหลังมาทีหลัง
+        return find(data.begin(), data.end(), a) < find(data.begin(), data.end(), b); //หาจนเจอ a,b แล้วเอาbมาหลังa (return true)
     } else if (isAPriority && !isBPriority) {
-        return true;  // a has priority, so it should come before b
+        return true;  // a มาก่อน b
     } else if (!isAPriority && isBPriority) {
-        return false; // b has priority, so it should come before a
+        return false; // b มาก่อน a
     } else {
-        // No priority markers for both rows or both have it, sort based on last column
+        // ถ้ามีทั้งคู่ให้เรียงตามลำดับเดิม
         return a.at(keys.back()) > b.at(keys.back());
     }});
 
@@ -90,7 +89,7 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
         }
         std::cout << endl;
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j]) << left << data[i][keys.at(j)] << "|";
+            std::cout << setw(col_sizes[j]) << left << data[i][keys.at(j)] << "|";  //เรียกทีละแถวไปตามคอลัมน์
         }
         std::cout << endl; 
     }
@@ -119,13 +118,15 @@ void addTodo(const string& filename, const vector<string>& entry) {
     // Open the file in append mode
     ofstream file(filename, ios::app);
     // Write the entry to the file
-    for (const auto& field : entry) {
-        file << field << ",";
-    }
+    for (size_t i = 0; i < entry.size(); ++i) {
+        file << entry[i];
+        if (i < entry.size()-1) {
+            file << ","; //เพิ่ม , ถ้าไม่ใช่ข้อมูลสุดท้าย
+        }}
     file << endl;
     file.close();
 
-    std::cout << "New entry added to " << filename << " successfully." << endl;
+    std::cout << "New entry added to To-Do List successfully." << endl;
 }
 
 void getUserInput() {  
@@ -146,61 +147,69 @@ void getUserInput() {
 
     std::cout << "Add a Category? (y/n) : ";
     getline(cin, input);
-    while(input!="y" && input!="Y" && input!="n" && input!="N"){
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
-    }
-    if(input=="y" || input == "Y"){
+    while(true){
+    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
     std::cout << "Enter Category: ";
     getline(cin, input);
     newEntry.push_back(input);
-    }else if(input=="n" || input == "N"){
+    break;
+    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
         input = "No category";
         newEntry.push_back(input);
+        break;
+    }
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
     }
 
     std::cout << "Add a Due Date? (y/n) : ";
     getline(cin, input);
-    while(input!="y" && input!="Y" && input!="n" && input!="N"){
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
-    }
-    if(input=="y" || input == "Y"){
+    while(true){
+    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
     std::cout << "Ender a Due Date : ";
     getline(cin, input);
     newEntry.push_back(input);
-    }else if(input=="n" || input == "N"){
+    break;
+    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
         input = "No date";
         newEntry.push_back(input);
+        break;
+    }
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
     }
 
     std::cout << "Add a Remarks? (y/n) : ";
     getline(cin, input);
-    while(input!="y" && input!="Y" && input!="n" && input!="N"){
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
-    }
-    if(input=="y" || input == "Y"){
+    while(true){
+    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
     std::cout << "Enter Remarks: ";
     getline(cin, input);
     newEntry.push_back(input);
-    }else if(input=="n" || input == "N"){
+    break;
+    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
         input = "None";
         newEntry.push_back(input);
+        break;
+    }
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
     }
     
     std::cout << "Mark as important? (y/n) : ";
     getline(cin, input);
-    while(input!="y" && input!="Y" && input!="n" && input!="N"){
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
-    }
-    if(input=="y" || input == "Y"){
+    while(true){
+    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
         input = "!";
         newEntry.push_back(input);
-    }else if(input=="n" || input == "N"){
+        break;
+    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
         input = " ";
         newEntry.push_back(input);
+        break;
+    }
+        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        getline(cin, input);
     }
 
     // Add the new entry to the data.csv file
