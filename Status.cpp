@@ -7,105 +7,158 @@
 #include <algorithm>
 using namespace std;
 
-//prototype functions
-vector<string> tokens(string text,string delimiter);
-void TodoList_table(vector<map<string,string>> data, vector<string> keys);
-void findTodoByStatus(const vector<map<string, string>>& data, const vector<string>& keys, const string& status);
+// Prototype functions
+vector<string> tokens(string text, string delimiter);
+void TodoList_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys);
+void findTodoDone(const vector<map<string, string>>& data, const vector<string>& keys);
+void findTodoUndone(const vector<map<string, string>>& data, const vector<string>& keys);
 
 int main()
 {
-    map<string,string> myMap;
-    vector<map<string,string>> data; //เก็บ myMap แต่ละแถวไว้ใน data
+    map<string, string> myMap;
+    vector<map<string, string>> data; // Store each row in myMap
     string textline;
     ifstream read;
 
     read.open("data.csv");
-    getline(read,textline); //บรรทัดแรก (หัวข้อประเภท)
-    vector<string> keys = tokens(textline, ","); //delimiter = ","
+    getline(read, textline); // First line (column headers)
+    vector<string> keys = tokens(textline, ",");
     vector<string> row;
-    while (getline(read, textline)) { //อ่านทีละแถวจนหมดไฟล์
-        row = tokens(textline, ",");  //delimiter = ","
-        myMap.clear(); //เคลียร์mapก่อนpair
-        for (int i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
-            myMap.insert(pair<string, string>(keys.at(i),row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
+    while (getline(read, textline)) {
+        row = tokens(textline, ",");
+        myMap.clear();
+        for (int i = 0; i < keys.size(); i++) {
+            myMap.insert(pair<string, string>(keys.at(i), row[i]));
         }
         data.push_back(myMap);
     }
-    TodoList_table(data,keys);
-     // Prompt user for status to find
-    string statusToFind;
-    cout << "Enter status to find (done or undone): ";
-    getline(cin, statusToFind);
+    cout << "Enter 1 to find tasks with status 'done' or 2 to find tasks with status 'undone': ";
+    string statusChoice;
+    getline(cin, statusChoice);
 
-    // Find and display tasks with the specified status
-    findTodoByStatus(data, keys, statusToFind);
-    
+    // Determine which function to call based on user input
+    if (statusChoice == "1") {
+        findTodoDone(data, keys);
+    }
+    else if (statusChoice == "2") {
+        findTodoUndone(data, keys);
+    }
+    else {
+        cout << "Invalid choice." << endl;
+    }
+
+    return 0;
 }
 
-void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //data เก็บ myMap ทุกแถวไว้, keys เก็บหัวข้อของทุกประเภทไว้อยู่
-    int data_count = data.size(); //จำนวนแถวข้อมูลทั้งหมด(จำนวนmyMap)
-    int col_count = keys.size(); //จำนวนคอลัมน์ข้อมูล(จำนวนประเภทข้อมูล)
+// Function to display Todo List table
+void TodoList_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys)
+{
+    int done_data_count = doneData.size();
+    int undone_data_count = undoneData.size();
+    int col_count = keys.size();
     vector<int> col_sizes(col_count);
-    for (int i = 0; i < col_count; i++) { //หา column size ที่มากที่สุด ของแต่ละคอลัมน์
-        col_sizes[i] = keys.at(i).length(); //ความยาวของข้อมูลที่ i
-        for (int j = 0; j < data_count; j++) {
-            if (col_sizes[i] < data[j][keys.at(i)].length()) {
-                col_sizes[i] = data[j][keys.at(i)].length(); //ถ้ามากกว่าข้อมูลที่ i ให้แทนค่านั้นเป็น column size
+    for (int i = 0; i < col_count; i++)
+    {
+        col_sizes[i] = keys.at(i).length();
+        for (int j = 0; j < done_data_count; j++)
+        {
+            if (col_sizes[i] < doneData[j][keys.at(i)].length())
+            {
+                col_sizes[i] = doneData[j][keys.at(i)].length();
+            }
+        }
+        for (int j = 0; j < undone_data_count; j++)
+        {
+            if (col_sizes[i] < undoneData[j][keys.at(i)].length())
+            {
+                col_sizes[i] = undoneData[j][keys.at(i)].length();
             }
         }
     }
-    //ขอบตารางบน----
+    // Print headers for both sets of data
     for (int i = 0; i < col_count; i++) {
-            std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
-        } 
-    std::cout << endl;
-    //ประเภทข้อมูล(ข้อมูลแถวแรก)
-    for (int i = 0; i < col_count; i++) {
-        std::cout  << setw(col_sizes[i]) << left << keys.at(i)  << "|";
+        std::cout << setw(col_sizes[i] + 1) << setfill('-') << "" << setfill(' ') << "-";
     }
     std::cout << endl;
-
-    //ขอบตารางและข้อมูลในตาราง --|--
-    for (int i = 0; i < data_count; i++) {
+    for (int i = 0; i < col_count; i++) {
+        std::cout << setw(col_sizes[i] + 1) << left << keys.at(i) << "|";
+    }
+    std::cout << endl;
+    // Check if it's the first line (header) and skip an empty line
+    if (done_data_count > 0 || undone_data_count > 0) {
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
+            std::cout << setw(col_sizes[j] + 1) << setfill(' ') << "" << "|";
+        }
+        std::cout << endl;
+    }
+    // Print data for "done" tasks
+    for (int i = 0; i < done_data_count; i++) {
+        for (int j = 0; j < col_count; j++) {
+            std::cout << setw(col_sizes[j] + 1) << left << doneData[i][keys.at(j)] << "|";
         }
         std::cout << endl;
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j]) << left << data[i][keys.at(j)] << "|";
+            std::cout << setw(col_sizes[j] + 1) << setfill(' ') << "" << "|";
         }
-        std::cout << endl; 
+        std::cout << endl;
     }
-    //ขอบตารางล่าง----
-    for (int i = 0; i < col_count; i++) {
-            std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
-        } 
-    std::cout << endl;
+    // Print data for "undone" tasks
+    for (int i = 0; i < undone_data_count; i++) {
+        for (int j = 0; j < col_count; j++) {
+            std::cout << setw(col_sizes[j] + 1) << left << undoneData[i][keys.at(j)] << "|";
+        }
+        std::cout << endl;
+        for (int j = 0; j < col_count; j++) {
+            std::cout << setw(col_sizes[j] + 1) << setfill(' ') << "" << "|";
+        }
+        std::cout << endl;
+    }
 }
 
-//["ID", "All To Dos", "Status", "Category", "Due Date", "Remarks", "!"]
-vector<string> tokens(string text,string delimiter) { //แยกข้อมูลตามตัวคั่น (delimiter)
+// Function to tokenize a string
+vector<string> tokens(string text, string delimiter)
+{
     vector<string> key;
     size_t found;
     string token;
-    while ((found = text.find(delimiter)) != string::npos) { //หาจนเจอ delimiter(",")
-        token = text.substr(0,found); //ดึงtextตำแหน่ง0ถึงตำแหน่งที่พบ","
-        key.push_back(token); //นำข้อมูลที่ดึงมาใส่ไปใน key
-        text.erase(0,found + delimiter.length()); //ลบข้อมูลกับ,ที่เจอ
+    while ((found = text.find(delimiter)) != string::npos)
+    {
+        token = text.substr(0, found);
+        key.push_back(token);
+        text.erase(0, found + delimiter.length());
     }
-    key.push_back(text); //ข้อมูลสุดท้าย
+    key.push_back(text);
     return key;
 }
 
-void findTodoByStatus(const vector<map<string, string>>& data, const vector<string>& keys, const string& status) {
-    // Print header
-    TodoList_table({{}}, keys);
+// Function to find and display tasks with status "done"
+void findTodoDone(const vector<map<string, string>>& data, const vector<string>& keys)
+{
+    vector<map<string, string>> doneData;
 
-    // Print tasks with the specified status
-    for (const auto& todo : data) {
-        if (todo.at("Status") == status) {
-            vector<map<string, string>> filteredData = {todo};
-            TodoList_table(filteredData, keys);
+    for (const auto& todo : data)
+    {
+        if (todo.at("Status") == "done") // Change to check "done"
+        {
+            doneData.push_back(todo);
         }
     }
+
+    TodoList_table(doneData, vector<map<string, string>>(), keys); // Send only the vector of "done" data
+}
+
+// Function to find and display tasks with status "undone"
+void findTodoUndone(const vector<map<string, string>>& data, const vector<string>& keys)
+{
+    vector<map<string, string>> undoneData;
+
+    for (const auto& todo : data)
+    {
+        if (todo.at("Status") == "undone") // Change to check "undone"
+        {
+            undoneData.push_back(todo);
+        }
+    }
+
+    TodoList_table(vector<map<string, string>>(), undoneData, keys); // Send only the vector of "undone" data
 }
