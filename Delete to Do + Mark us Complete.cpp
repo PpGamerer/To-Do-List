@@ -1,65 +1,92 @@
 #include <iostream>
-#include <vector>
 #include <string>
-
+#include <vector>
+#include <map>
+#include <fstream>
+#include <iomanip>
+#include <algorithm>
 using namespace std;
 
-// ใน Task เก็บ name และ completed
 struct Task {
     string name;
     bool completed;
 };
-// Function to delete a task from the to-do list
-void deleteTask(vector<Task> &todoList, int taskIndex) {
-    if (taskIndex >= 0 && taskIndex < todoList.size()) {
-        cout << "Task deleted: " << todoList[taskIndex].name << endl;
-        todoList.erase(todoList.begin() + taskIndex);
-    } else {
-        cout << "Invalid task index!" << endl;
-    }
-}
-// Function to mark a task as completed
-void completeTask(vector<Task> &todoList, int taskIndex) {
-    if (taskIndex >= 0 && taskIndex < todoList.size()) {
-        todoList[taskIndex].completed = true;
-        cout << "Task mark as completed: " << todoList[taskIndex].name << endl;
-    } else {
-        cout << "Invalid task index!" << endl;
-    }
-}
 
 int main() {
-    vector<Task> todoList;
-    int choice;
-    string taskName;
-    
-    cout << "Tasks To Do " << endl;
-    
-    do {
-        cout << "------------\n3-Delete Task\n4-Complete Task\nEnter your choice: ";
-        cin >> choice;
-        
-        switch (choice) {
-            case 3:
-                system("cls");
-                int taskIndexDelete;
-                cout << "Enter task index to delete: ";
-                cin >> taskIndexDelete;
-                deleteTask(todoList, taskIndexDelete - 1);
-                break;
-            case 4:
-                system("cls");
-                int taskIndexComplete;
-                cout << "Enter task index to mark as completed: ";
-                cin >> taskIndexComplete;
-                completeTask(todoList, taskIndexComplete - 1);
-                break;
-            default:
-                system("cls");
-                cout << "Invalid choice! Please enter a number between 3 and 4." << endl;
+    map<string,string> myMap;
+    vector<map<string,string>> data; // Store myMap for each row in data
+    string textline;
+    ifstream read;
+
+    read.open("data.csv");
+    getline(read,textline); // First line (column headers)
+    vector<string> keys = tokens(textline, ",");
+    vector<string> row;
+    while (getline(read, textline)) { // Read each line until end of file
+        row = tokens(textline, ",");  
+        myMap.clear(); // Clear map before adding new pairs
+        for (size_t i = 0; i < keys.size(); i++) {
+            myMap.insert(pair<string, string>(keys.at(i),row[i]));
         }
-    } while (choice != 3 && choice != 4);
-    
+        data.push_back(myMap);
+    }
+    TodoList_table(data,keys);
+
+    int choice;
+    cout << "\n1. Delete Task\n2. Mark Task as Complete\nEnter your choice: ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1: { // Delete to Do
+            int taskIndex;
+            cout << "Enter task index to delete: ";
+            cin >> taskIndex;
+            if (taskIndex >= 1 && taskIndex <= data.size()) {
+                data.erase(data.begin() + taskIndex - 1); // Remove task from data
+                // Update IDs in data vector
+                for (size_t i = taskIndex - 1; i < data.size(); ++i) {
+                    data[i]["ID"] = to_string(i + 1);
+                }
+                // Update CSV file
+                ofstream file("data.csv");
+                file << "ID,All To Dos,Status,Category,Due Date,Remarks" << endl; // Rewrite headers
+                for (const auto& entry : data) {
+                    for (const auto& pair : entry) {
+                        file << pair.second << ",";
+                    }
+                    file << endl;
+                }
+                cout << "Task deleted successfully." << endl;
+            } else {
+                cout << "Invalid task index!" << endl;
+            }
+            break;
+        }
+        case 2: {
+            int taskIndex;
+            cout << "Enter task index to mark as complete: ";
+            cin >> taskIndex;
+            if (taskIndex >= 1 && taskIndex <= data.size()) {
+                data[taskIndex - 1]["Status"] = "completed";
+                // Update CSV file
+                ofstream file("data.csv");
+                file << "ID,All To Dos,Status,Category,Due Date,Remarks" << endl; // Rewrite headers
+                for (const auto& entry : data) {
+                    for (const auto& pair : entry) {
+                        file << pair.second << ",";
+                    }
+                    file << endl;
+                }
+                cout << "Task marked as complete successfully." << endl;
+            } else {
+                cout << "Invalid task index!" << endl;
+            }
+            break;
+        }
+        default:
+            cout << "Invalid choice!" << endl;
+    }
+
     return 0;
 }
 
