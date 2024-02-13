@@ -1,6 +1,10 @@
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
+#include <map>
+#include <fstream>
+#include <iomanip>
+#include <algorithm>
 
 using namespace std;
 
@@ -51,52 +55,87 @@ void displayList(const vector<Task> &todoList) {
     }
 }
 
+
+
+void addTodo(const string& filename, const vector<string>& entry) {
+    // Open the file in append mode
+    ofstream file(filename, ios::app);
+    // Write the entry to the file
+    for (const auto& field : entry) {
+        file << field << ",";
+    }
+    file << endl;
+    file.close();
+
+    std::cout << "New entry added to " << filename << " successfully." << endl;
+}
+
+
+void displayMenu(){
+    system("cls");
+    system("Color 95");
+    cout << "*===============================*" << endl;
+    cout << "             To do List          " << endl;
+    cout << "*===============================*" << endl;
+    cout << endl;
+    cout << "1. View all to do" << endl;
+    cout << "2. View completed to do" << endl;
+    cout << "3. View all to do from category" << endl;
+    cout << "4. Add new to do" << endl;
+    cout << "5. Delete a To-do" << endl;
+    cout << "6. exit" << endl;
+    cout << endl;
+    cout << "*******************************************" << endl;
+    cout << "Enter your choice: ";
+}
+
 int main() {
-    vector<Task> todoList;
     int choice;
-    string taskName;
-    
-    cout << "To-Do List " << endl;
     
     do {
-        cout << "------------\n1-To Add Task\n2-Display List\n3-Delete Task\n4-Complete Task\n0-Exit\nEnter your choice: ";
+        displayMenu();
         cin >> choice;
         
-        switch (choice) {
+        switch(choice) {
             case 1:
                 system("cls");
-                cout << "Enter task name: ";
-                cin.ignore();
-                getline(cin, taskName);
-                addTask(todoList, taskName);
+                cout << "You chose View all to do" << endl;
+            
                 break;
             case 2:
                 system("cls");
-                displayList(todoList);
+                cout << "You chose View completed to do" << endl;
+            
                 break;
             case 3:
                 system("cls");
-                int taskIndexDelete;
-                cout << "Enter task index to delete: ";
-                cin >> taskIndexDelete;
-                deleteTask(todoList, taskIndexDelete - 1);
+                cout << "You chose View all to do from category" << endl;
+                
                 break;
             case 4:
                 system("cls");
-                int taskIndexComplete;
-                cout << "Enter task index to mark as completed: ";
-                cin >> taskIndexComplete;
-                completeTask(todoList, taskIndexComplete - 1);
+                cout << "You chose Add new to do" << endl;
+                
                 break;
-            case 0:
+            case 5:
                 system("cls");
-                cout << "Exiting program. Goodbye!" << endl;
+                cout << "You chose Delete a To-do" << endl;
+                
+                break;
+            case 6:
+                system("cls");
+                cout << "Exiting..." << endl;
                 break;
             default:
-                cout << "Invalid choice! Please enter a number between 0 and ." << endl;
+                cout << "Invalid choice. Please try again." << endl;
+                break;
         }
-    } while (choice != 5);
+        cin.ignore();
+        cin.get();
+    } while(choice != 6);
     
     return 0;
 }
+
+
 
