@@ -9,7 +9,7 @@ using namespace std;
 
 // Prototype functions
 vector<string> tokens(string text, string delimiter);
-void TodoList_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys);
+void Status_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys);
 void findTodoDone(const vector<map<string, string>>& data, const vector<string>& keys);
 void findTodoUndone(const vector<map<string, string>>& data, const vector<string>& keys);
 
@@ -84,6 +84,51 @@ void Status_table(vector<map<string, string>> doneData, vector<map<string, strin
         std::cout << setw(col_sizes[i]) << left << keys.at(i) << "|";
     }
     std::cout << endl;
+    sort(doneData.begin(), doneData.end(), [&](const auto& a, const auto& b) {
+    auto Check = [&](const auto& row) {
+        return row.at(keys.back()) == "!";
+    };
+    bool isAPriority = Check(a);
+    bool isBPriority = Check(b);
+
+    bool isANonPriority = !isAPriority; 
+    bool isBNonPriority = !isBPriority;
+
+    if (isANonPriority && isBNonPriority) {
+        // ถ้าไม่มีทั้งคู่ให้เรียงอันที่เพิ่มหลังมาทีหลัง
+        return find(doneData.begin(), doneData.end(), a) < find(doneData.begin(), doneData.end(), b); //หาจนเจอ a,b แล้วเอาbมาหลังa (return true)
+    } else if (isAPriority && !isBPriority) {
+        return true;  // a มาก่อน b
+    } else if (!isAPriority && isBPriority) {
+        return false; // b มาก่อน a
+    } else {
+        // ถ้ามีทั้งคู่ให้เรียงตามลำดับเดิม
+        return a.at(keys.back()) > b.at(keys.back());
+    }});
+
+    sort(undoneData.begin(), undoneData.end(), [&](const auto& a, const auto& b) {
+    auto Check = [&](const auto& row) {
+        return row.at(keys.back()) == "!";
+    };
+    bool isAPriority = Check(a);
+    bool isBPriority = Check(b);
+
+    bool isANonPriority = !isAPriority; 
+    bool isBNonPriority = !isBPriority;
+
+    if (isANonPriority && isBNonPriority) {
+        // ถ้าไม่มีทั้งคู่ให้เรียงอันที่เพิ่มหลังมาทีหลัง
+        return find(undoneData.begin(), undoneData.end(), a) < find(undoneData.begin(), undoneData.end(), b); //หาจนเจอ a,b แล้วเอาbมาหลังa (return true)
+    } else if (isAPriority && !isBPriority) {
+        return true;  // a มาก่อน b
+    } else if (!isAPriority && isBPriority) {
+        return false; // b มาก่อน a
+    } else {
+        // ถ้ามีทั้งคู่ให้เรียงตามลำดับเดิม
+        return a.at(keys.back()) > b.at(keys.back());
+    }});
+
+
     // Print data for "done" tasks
     for (int i = 0; i < done_data_count; i++) {
         for (int j = 0; j < col_count; j++) {
@@ -142,7 +187,7 @@ void findTodoDone(const vector<map<string, string>>& data, const vector<string>&
         }
     }
 
-    TodoList_table(doneData, vector<map<string, string>>(), keys); // Send only the vector of "done" data
+    Status_table(doneData, vector<map<string, string>>(), keys); // Send only the vector of "done" data
 }
 
 // Function to find and display tasks with status "undone"
@@ -158,5 +203,5 @@ void findTodoUndone(const vector<map<string, string>>& data, const vector<string
         }
     }
 
-    TodoList_table(vector<map<string, string>>(), undoneData, keys); // Send only the vector of "undone" data
+    Status_table(vector<map<string, string>>(), undoneData, keys); // Send only the vector of "undone" data
 }
