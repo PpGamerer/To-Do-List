@@ -51,7 +51,7 @@ int main()
 }
 
 // Function to display Todo List table
-void TodoList_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys)
+void Status_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys)
 {
     int done_data_count = doneData.size();
     int undone_data_count = undoneData.size();
@@ -77,42 +77,40 @@ void TodoList_table(vector<map<string, string>> doneData, vector<map<string, str
     }
     // Print headers for both sets of data
     for (int i = 0; i < col_count; i++) {
-        std::cout << setw(col_sizes[i] + 1) << setfill('-') << "" << setfill(' ') << "-";
+        std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
     }
     std::cout << endl;
     for (int i = 0; i < col_count; i++) {
-        std::cout << setw(col_sizes[i] + 1) << left << keys.at(i) << "|";
+        std::cout << setw(col_sizes[i]) << left << keys.at(i) << "|";
     }
     std::cout << endl;
-    // Check if it's the first line (header) and skip an empty line
-    if (done_data_count > 0 || undone_data_count > 0) {
-        for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j] + 1) << setfill(' ') << "" << "|";
-        }
-        std::cout << endl;
-    }
     // Print data for "done" tasks
     for (int i = 0; i < done_data_count; i++) {
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j] + 1) << left << doneData[i][keys.at(j)] << "|";
+            std::cout << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
         }
         std::cout << endl;
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j] + 1) << setfill(' ') << "" << "|";
+            std::cout << setw(col_sizes[j] ) << left << doneData[i][keys.at(j)] << "|";
         }
         std::cout << endl;
     }
     // Print data for "undone" tasks
     for (int i = 0; i < undone_data_count; i++) {
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j] + 1) << left << undoneData[i][keys.at(j)] << "|";
+            std::cout << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
         }
         std::cout << endl;
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j] + 1) << setfill(' ') << "" << "|";
+            std::cout << setw(col_sizes[j] ) << left << undoneData[i][keys.at(j)] << "|";
         }
         std::cout << endl;
+
     }
+    for (int i = 0; i < col_count; i++) {
+            std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
+        } 
+    std::cout << endl;
 }
 
 // Function to tokenize a string
