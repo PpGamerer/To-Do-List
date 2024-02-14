@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
+#include <cstdlib>
+
 
 using namespace std;
 
@@ -73,20 +75,20 @@ void addTodo(const string& filename, const vector<string>& entry) {
 
 void displayMenu(){
     system("cls");
-    system("Color 95");
-    cout << "*===============================*" << endl;
-    cout << "             To do List          " << endl;
-    cout << "*===============================*" << endl;
-    cout << endl;
-    cout << "1. View all to do" << endl;
-    cout << "2. View completed to do" << endl;
-    cout << "3. View all to do from category" << endl;
-    cout << "4. Add new to do" << endl;
-    cout << "5. Delete a To-do" << endl;
-    cout << "6. exit" << endl;
-    cout << endl;
-    cout << "*******************************************" << endl;
-    cout << "Enter your choice: ";
+    cout << "\033[1;31m*=================================*" << endl;
+    cout << "|            \033[1;33mTo do List           \033[1;31m|" << endl;
+    cout << "\033[1;31m*=================================*" << endl;
+    cout << "\033[1;31m|                                 \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 1. View all to do               \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 2. View completed to do         \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 3. View all to do from category \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 4. Add new to do                \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 5. Delete a To-do               \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 6. Mark as completed            \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 7. Exit                         \033[1;31m|" << endl;
+    cout << "\033[1;31m|                                 \033[1;31m|" << endl;
+    cout << "\033[1;31m***********************************" << endl;
+    cout << "\033[1;32m  Enter your choice: ";
 }
 
 int main() {
@@ -120,9 +122,12 @@ int main() {
             case 5:
                 system("cls");
                 cout << "You chose Delete a To-do" << endl;
-                
                 break;
-            case 6:
+             case 6:
+                system("cls");
+                cout << "You chose Mark as completed" << endl;
+                break;
+            case 7:
                 system("cls");
                 cout << "Exiting..." << endl;
                 break;
@@ -132,7 +137,7 @@ int main() {
         }
         cin.ignore();
         cin.get();
-    } while(choice != 6);
+    } while(choice != 7);
     
     return 0;
 }
