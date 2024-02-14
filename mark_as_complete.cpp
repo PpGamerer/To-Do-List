@@ -45,7 +45,11 @@ int main()
         findTodoUndone(data, keys);
     } 
     else if (statusChoice == "3") {
+<<<<<<< HEAD:mark as complete.cpp
         findTodoUndone(data, keys); // แสดงตารางข้อมูล "undone"
+=======
+        findTodoUndone(data, keys);
+>>>>>>> 94fab2a4d595a5bad6ead3ea24f018019d576deb:mark_as_complete.cpp
         cout << "Enter the ID of the task you want to mark as done/undone: ";
         string taskId;
         getline(cin, taskId);
