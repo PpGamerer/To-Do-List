@@ -200,7 +200,6 @@ void findTodoDone(const vector<map<string, string>>& data, const vector<string>&
             doneData.push_back(todo);
         }
     }
-
     Status_table(doneData, vector<map<string, string>>(), keys); // Send only the vector of "done" data
 }
 
@@ -216,7 +215,6 @@ void findTodoUndone(const vector<map<string, string>>& data, const vector<string
             undoneData.push_back(todo);
         }
     }
-
     Status_table(vector<map<string, string>>(), undoneData, keys); // Send only the vector of "undone" data
 }
 
@@ -232,7 +230,29 @@ void updateStatus(vector<map<string, string>>& data, const string& id, const vec
                 todo["Status"] = "undone";
                 cout << "Task with ID " << id << " is marked as undone." << endl;
             }
+            // Write the updated data back to the file
+            ofstream file("data.csv");
+            if (file.is_open()) {
+                // Write column headers
+                for (size_t i = 0; i < keys.size(); ++i) {
+                    file << keys[i];
+                    if (i != keys.size() - 1) file << ",";
+                    else file << "\n";
+                }
+                // Write each row of data
+                for (const auto& row : data) {
+                    for (size_t i = 0; i < keys.size(); ++i) {
+                        file << row.at(keys[i]);
+                        if (i != keys.size() - 1) file << ",";
+                        else file << "\n";
+                    }
+                }
+                file.close();
+            } else {
+                cout << "Unable to open file." << endl;
+            }
             return;
         }
     }
-}
+    cout << "Task with ID " << id << " not found." << endl;
+} 
