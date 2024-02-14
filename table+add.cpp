@@ -199,19 +199,19 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
 }
 
 void reloadData(vector<map<string, string>>& data, const vector<string>& keys){
-    data.clear(); // Clear existing data vector
+    data.clear(); //เคลียร์ไฟล์ data.csv
     string textline;
     ifstream read;
     read.open("data.csv");
-    getline(read,textline); // Read the column headers
+    getline(read,textline);  //บรรทัดแรก (หัวข้อประเภท)
     vector<string> row;
-    while (getline(read, textline)) { // Read each line of data
+    while (getline(read, textline)) { // อ่านทีละแถวจนหมดไฟล์
         row = tokens(textline, ",");  // Extract data for each row
         map<string, string> myMap;
-        for (size_t i = 0; i < keys.size(); i++) { // Iterate over columns
-            myMap.insert(pair<string, string>(keys.at(i), row[i])); // Insert data into map
+        for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
+            myMap.insert(pair<string, string>(keys.at(i), row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
         }
-        data.push_back(myMap); // Add map (row) to data vector
+        data.push_back(myMap); 
     }
     read.close();
 }
