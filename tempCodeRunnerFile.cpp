@@ -10,6 +10,9 @@ using namespace std;
 
 // Prototype functions
 vector<string> tokens(string text, string delimiter);
+void addTodo(const string& filename, const vector<string>& entry);
+void getUserInput(vector<map<string, string>>& data, const vector<string>& keys);
+void reloadData(vector<map<string, string>>& data, const vector<string>& keys);
 void TodoList_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys);
 void findTodoDone(const vector<map<string, string>>& data, const vector<string>& keys);
 void findTodoUndone(const vector<map<string, string>>& data, const vector<string>& keys);
@@ -34,6 +37,8 @@ int main()
         }
         data.push_back(myMap);
     }
+    TodoList_table(data,keys);
+    getUserInput(data,keys);
 
     string choice;
     do {
