@@ -45,6 +45,7 @@ int main()
         findTodoUndone(data, keys);
     } 
     else if (statusChoice == "3") {
+        findTodoUndone(data, keys);
         cout << "Enter the ID of the task you want to mark as done/undone: ";
         string taskId;
         getline(cin, taskId);
