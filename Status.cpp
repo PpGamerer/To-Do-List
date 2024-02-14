@@ -12,6 +12,7 @@ vector<string> tokens(string text, string delimiter);
 void Status_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys);
 void findTodoDone(const vector<map<string, string>>& data, const vector<string>& keys);
 void findTodoUndone(const vector<map<string, string>>& data, const vector<string>& keys);
+void getUserChoiceLoop(const vector<map<string, string>>& data, const vector<string>& keys);
 
 int main()
 {
@@ -32,23 +33,27 @@ int main()
         }
         data.push_back(myMap);
     }
-    cout << "Enter 1 to find tasks with status 'done' or 2 to find tasks with status 'undone': ";
-    string statusChoice;
-    getline(cin, statusChoice);
-
-    // Determine which function to call based on user input
-    if (statusChoice == "1") {
-        findTodoDone(data, keys);
-    }
-    else if (statusChoice == "2") {
-        findTodoUndone(data, keys);
-    }
-    else {
-        cout << "Invalid choice." << endl;
-    }
-
-    return 0;
+    getUserChoiceLoop(data,keys);
 }
+
+void getUserChoiceLoop(const vector<map<string, string>>& data, const vector<string>& keys){
+    while (true) {
+        cout << "Enter 1 to find tasks with status 'done' \nEnter 2 to find tasks with status 'undone': ";
+        string statusChoice;
+        getline(cin, statusChoice);
+
+        if (statusChoice == "1") {
+            findTodoDone(data, keys);
+            break;
+        } else if (statusChoice == "2") {
+            findTodoUndone(data, keys);
+            break;
+        } else {
+            cout << "Invalid choice." << endl;
+        }
+    }
+}
+
 
 // Function to display Todo List table
 void Status_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys)
