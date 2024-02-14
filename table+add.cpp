@@ -9,9 +9,12 @@ using namespace std;
 
 //prototype functions
 void addTodo(const string& filename, const vector<string>& entry);
-void getUserInput();
+void getUserInput(vector<map<string, string>>& data, const vector<string>& keys);
+void reloadData(vector<map<string, string>>& data, const vector<string>& keys);
 vector<string> tokens(string text,string delimiter);
 void TodoList_table(vector<map<string,string>> data, vector<string> keys);
+
+    
 
 int main()
 {
@@ -19,7 +22,6 @@ int main()
     vector<map<string,string>> data; //เก็บ myMap แต่ละแถวไว้ใน data
     string textline;
     ifstream read;
-
     read.open("data.csv");
     getline(read,textline); //บรรทัดแรก (หัวข้อประเภท)
     vector<string> keys = tokens(textline, ","); //delimiter = ","
@@ -33,8 +35,9 @@ int main()
         data.push_back(myMap);
     }
     TodoList_table(data,keys);
-    getUserInput();
-    
+    getUserInput(data,keys);
+    TodoList_table(data,keys);
+    return 0;
 }
 
 void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //data เก็บ myMap ทุกแถวไว้, keys เก็บหัวข้อของทุกประเภทไว้อยู่
@@ -107,7 +110,7 @@ void addTodo(const string& filename, const vector<string>& entry) {
     std::cout << "New entry added to To-Do List successfully." << endl;
 }
 
-void getUserInput() {  
+void getUserInput(vector<map<string, string>>& data, const vector<string>& keys) {  
     vector<string> newEntry;
 
     // Get user input for each field
@@ -192,5 +195,23 @@ void getUserInput() {
 
     // Add the new entry to the data.csv file
     addTodo("data.csv", newEntry);
+    reloadData(data,keys);
+}
 
+void reloadData(vector<map<string, string>>& data, const vector<string>& keys){
+    data.clear(); // Clear existing data vector
+    string textline;
+    ifstream read;
+    read.open("data.csv");
+    getline(read,textline); // Read the column headers
+    vector<string> row;
+    while (getline(read, textline)) { // Read each line of data
+        row = tokens(textline, ",");  // Extract data for each row
+        map<string, string> myMap;
+        for (size_t i = 0; i < keys.size(); i++) { // Iterate over columns
+            myMap.insert(pair<string, string>(keys.at(i), row[i])); // Insert data into map
+        }
+        data.push_back(myMap); // Add map (row) to data vector
+    }
+    read.close();
 }
