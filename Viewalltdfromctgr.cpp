@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
+#include <set>
 using namespace std;
 
 // Prototype functions
@@ -12,7 +13,7 @@ vector<string> tokens(string text, string delimiter);
 void TodoList_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys);
 void findTodoDone(const vector<map<string, string>>& data, const vector<string>& keys);
 void findTodoUndone(const vector<map<string, string>>& data, const vector<string>& keys);
-void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys);
+void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& category); // Added category parameter
 
 int main()
 {
@@ -34,21 +35,50 @@ int main()
         data.push_back(myMap);
     }
 
-    cout << "Enter 1 to find tasks with status 'done', 2 to find tasks with status 'undone', or 3 to find tasks by category: ";
     string choice;
-    getline(cin, choice);
+    do {
+        cout << "Enter 1 to find tasks with status 'done', 2 to find tasks with status 'undone', or 3 to find tasks by category: ";
+        getline(cin, choice);
 
-    if (choice == "1") {
-        findTodoDone(data, keys);
-        findTodoByCategory(data, keys);
+        if (choice == "1") {
+            findTodoDone(data, keys);
+        }
+        else if (choice == "2") {
+            findTodoUndone(data, keys);
+        }
+        else if (choice == "3") {
+    cout << "Categories available:" << endl;
+    set<string> categories; // Use a set to avoid duplicates
+    for (const auto& todo : data) {
+        categories.insert(todo.at("Category"));
     }
-    else if (choice == "2") {
-        findTodoUndone(data, keys);
-        findTodoByCategory(data, keys);
+    for (const auto& category : categories) {
+        cout << category << endl;
     }
-    else {
-        cout << "Invalid choice." << endl;
-    }
+
+    string category;
+    bool categoryFound = false;
+    do {
+        cout << "Enter the category: ";
+        getline(cin, category);
+        categoryFound = false;
+        for (const auto& todo : data) {
+            if (todo.at("Category") == category) {
+                categoryFound = true;
+                break;
+            }
+        }
+        if (!categoryFound) {
+            cout << "No tasks found for category: " << category << endl;
+        }
+    } while (!categoryFound);
+    findTodoByCategory(data, keys, category); // Pass category to the function
+}
+
+        else {
+            cout << "Please enter the correct answer" << endl;
+        }
+    } while (choice != "1" && choice != "2" && choice != "3");
 
     return 0;
 }
@@ -87,6 +117,51 @@ void TodoList_table(vector<map<string, string>> doneData, vector<map<string, str
         std::cout << setw(col_sizes[i]) << left << keys.at(i) << "|";
     }
     std::cout << endl;
+    sort(doneData.begin(), doneData.end(), [&](const auto& a, const auto& b) {
+    auto Check = [&](const auto& row) {
+        return row.at(keys.back()) == "!";
+    };
+    bool isAPriority = Check(a);
+    bool isBPriority = Check(b);
+
+    bool isANonPriority = !isAPriority; 
+    bool isBNonPriority = !isBPriority;
+
+    if (isANonPriority && isBNonPriority) {
+        // ถ้าไม่มีทั้งคู่ให้เรียงอันที่เพิ่มหลังมาทีหลัง
+        return find(doneData.begin(), doneData.end(), a) < find(doneData.begin(), doneData.end(), b); //หาจนเจอ a,b แล้วเอาbมาหลังa (return true)
+    } else if (isAPriority && !isBPriority) {
+        return true;  // a มาก่อน b
+    } else if (!isAPriority && isBPriority) {
+        return false; // b มาก่อน a
+    } else {
+        // ถ้ามีทั้งคู่ให้เรียงตามลำดับเดิม
+        return a.at(keys.back()) > b.at(keys.back());
+    }});
+
+    sort(undoneData.begin(), undoneData.end(), [&](const auto& a, const auto& b) {
+    auto Check = [&](const auto& row) {
+        return row.at(keys.back()) == "!";
+    };
+    bool isAPriority = Check(a);
+    bool isBPriority = Check(b);
+
+    bool isANonPriority = !isAPriority; 
+    bool isBNonPriority = !isBPriority;
+
+    if (isANonPriority && isBNonPriority) {
+        // ถ้าไม่มีทั้งคู่ให้เรียงอันที่เพิ่มหลังมาทีหลัง
+        return find(undoneData.begin(), undoneData.end(), a) < find(undoneData.begin(), undoneData.end(), b); //หาจนเจอ a,b แล้วเอาbมาหลังa (return true)
+    } else if (isAPriority && !isBPriority) {
+        return true;  // a มาก่อน b
+    } else if (!isAPriority && isBPriority) {
+        return false; // b มาก่อน a
+    } else {
+        // ถ้ามีทั้งคู่ให้เรียงตามลำดับเดิม
+        return a.at(keys.back()) > b.at(keys.back());
+    }});
+
+    
     // Print data for "done" tasks
     for (int i = 0; i < done_data_count; i++) {
         for (int j = 0; j < col_count; j++) {
@@ -113,7 +188,12 @@ void TodoList_table(vector<map<string, string>> doneData, vector<map<string, str
         std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
     } 
     std::cout << endl;
+
+    // ไม่ทำการเรียงลำดับข้อมูล
+
 }
+
+
 
 // Function to tokenize a string
 vector<string> tokens(string text, string delimiter)
@@ -162,21 +242,27 @@ void findTodoUndone(const vector<map<string, string>>& data, const vector<string
 }
 
 // Function to find and display tasks by category
-void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys)
+void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& category)
 {
-    map<string, vector<map<string, string>>> categoryData;
+    vector<map<string, string>> categoryUndoneData; // สร้างเวกเตอร์เพื่อเก็บงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่กำหนด
 
-    // Group tasks by category
+    // เก็บงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่ระบุ
     for (const auto& todo : data)
     {
-        string category = todo.at("Category");
-        categoryData[category].push_back(todo);
+        if (todo.at("Category") == category && todo.at("Status") == "undone") // ตรวจสอบว่างานอยู่ในหมวดหมู่และยังไม่เสร็จสิ้น
+        {
+            categoryUndoneData.push_back(todo);
+        }
     }
 
-    // Print tasks for each category
-    for (const auto& entry : categoryData)
+    // แสดงงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่กำหนด
+    if (categoryUndoneData.empty())
     {
-        cout << "Category: " << entry.first << endl;
-        TodoList_table(entry.second, vector<map<string, string>>(), keys);
+        cout << "No undone tasks found for category: " << category << endl;
+    }
+    else
+    {
+        TodoList_table(categoryUndoneData, vector<map<string, string>>(), keys);
     }
 }
+
