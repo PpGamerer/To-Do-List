@@ -12,7 +12,7 @@ vector<string> tokens(string text, string delimiter);
 void Status_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys);
 void findTodoDone(const vector<map<string, string>>& data, const vector<string>& keys);
 void findTodoUndone(const vector<map<string, string>>& data, const vector<string>& keys);
-void updateStatus(vector<map<string, string>>& data, const string& id);
+void updateStatus(vector<map<string, string>>& data, const string& id, const vector<string>& keys);
 
 int main()
 {
@@ -45,11 +45,12 @@ int main()
         findTodoUndone(data, keys);
     } 
     else if (statusChoice == "3") {
+        findTodoUndone(data, keys); // แสดงตารางข้อมูล "undone"
         cout << "Enter the ID of the task you want to mark as done/undone: ";
         string taskId;
         getline(cin, taskId);
-        updateStatus(data, taskId);
-        // After updating, display the updated list based on user's choice
+        updateStatus(data, taskId, keys); // ทำการอัปเดตสถานะ
+    // ไม่ต้องแสดงตารางอีกครั้ง เนื่องจากตาราง "undone" จะถูกแสดงใหม่ในฟังก์ชัน updateStatus
         if (statusChoice == "1") {
             findTodoDone(data, keys);
         } else if (statusChoice == "2") {
@@ -220,12 +221,14 @@ void findTodoUndone(const vector<map<string, string>>& data, const vector<string
 }
 
 // Function to update the status of a task
-void updateStatus(vector<map<string, string>>& data, const string& id) {
+void updateStatus(vector<map<string, string>>& data, const string& id, const vector<string>& keys) {
     for (auto& todo : data) {
         if (todo["ID"] == id) {
             if (todo["Status"] == "undone") {
                 todo["Status"] = "done";
                 cout << "Task with ID " << id << " is marked as done." << endl;
+                findTodoDone(data, keys);
+                findTodoUndone(data,keys);
             } else {
                 todo["Status"] = "undone";
                 cout << "Task with ID " << id << " is marked as undone." << endl;
@@ -235,6 +238,4 @@ void updateStatus(vector<map<string, string>>& data, const string& id) {
     }
     cout << "Task with ID " << id << " not found." << endl;
 }
-
-
 
