@@ -11,6 +11,7 @@ using namespace std;
 void addTodo(const string& filename, const vector<string>& entry);
 vector<string> tokens(string text,string delimiter);
 void TodoList_table(vector<map<string,string>> data, vector<string> keys);
+bool hasTextInColumn7(const std::string& row);
 
 int main()
 {
@@ -31,6 +32,10 @@ int main()
         }
         data.push_back(myMap);
     }
+    // เรียงลำดับแถวตามเงื่อนไขที่กำหนด
+    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
+    return hasTextInColumn7(row.at("!"));
+    });
     TodoList_table(data,keys);
 }
 
@@ -87,4 +92,14 @@ vector<string> tokens(string text,string delimiter) { //แยกข้อมู
     }
     key.push_back(text); //ข้อมูลสุดท้าย
     return key;
+}
+
+// ฟังก์ชันตรวจสอบว่าในคอลัมน์ที่ 7 มีข้อความหรือไม่
+bool hasTextInColumn7(const string& row) {
+    istringstream iss(row);
+    string column7;
+    for (int i = 0; i < 7; ++i) {
+        getline(iss, column7, ',');
+    }
+    return !column7.empty();
 }
