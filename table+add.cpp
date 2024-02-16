@@ -63,6 +63,28 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
     }
     std::cout << endl;
 
+sort(data.begin(), data.end(), [&](const auto& a, const auto& b) {
+    auto Check = [&](const auto& row) {
+        return row.at(keys.back()) == "!";
+    };
+    bool isAPriority = Check(a);
+    bool isBPriority = Check(b);
+
+    bool isANonPriority = !isAPriority; 
+    bool isBNonPriority = !isBPriority;
+
+    if (isANonPriority && isBNonPriority) {
+        // ถ้าไม่มีทั้งคู่ให้เรียงอันที่เพิ่มหลังมาทีหลัง
+        return find(data.begin(), data.end(), a) < find(data.begin(), data.end(), b); //หาจนเจอ a,b แล้วเอาbมาหลังa (return true)
+    } else if (isAPriority && !isBPriority) {
+        return true;  // a มาก่อน b
+    } else if (!isAPriority && isBPriority) {
+        return false; // b มาก่อน a
+    } else {
+        // ถ้ามีทั้งคู่ให้เรียงตามลำดับเดิม
+        return a.at(keys.back()) > b.at(keys.back());
+    }});
+
     //ขอบตารางและข้อมูลในตาราง --|--
     for (int i = 0; i < data_count; i++) {
         for (int j = 0; j < col_count; j++) {
