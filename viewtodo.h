@@ -142,7 +142,7 @@ string selectCategory(const vector<map<string, string>>& data) {
             }
         }
         if (!categoryFound) {
-            cout << "No tasks found for category: " << findcategory << endl;
+            cout << "This category was not found. Please try again." << endl;
         }
     } while (!categoryFound);
 

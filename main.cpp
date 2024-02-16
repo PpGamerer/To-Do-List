@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <cstdlib>
+#include <ctime>
 
 #include "menu.h"
 #include "viewtodo.h"
@@ -15,24 +16,25 @@
 #include "mark_as_completed.h"
 
 using namespace std;
+void delay(int sec);
 
 int main() {
     map<string, string> myMap;
-    vector<map<string, string>> data; // Store each row in myMap
+    vector<map<string, string>> data; //เก็บ myMap แต่ละแถวไว้ใน data
     string textline;
     ifstream read;
 
     read.open("data.csv");
-    getline(read, textline); // First line (column headers)
-    vector<string> keys = tokens(textline, ",");
+    getline(read, textline); //บรรทัดแรก (หัวข้อประเภท)
+    vector<string> keys = tokens(textline, ","); //แยกตามหัวข้อ ใช้delimiter = ","
     vector<string> row;
-    while (getline(read, textline)) {
-        row = tokens(textline, ",");
-        myMap.clear();
-        for (int i = 0; i < keys.size(); i++) {
-            myMap.insert(pair<string, string>(keys.at(i), row[i]));
+    while (getline(read, textline)) { //อ่านทีละแถวจนหมดไฟล์
+        row = tokens(textline, ",");  //delimiter = ","
+        myMap.clear(); //เคลียร์mapก่อนpair
+        for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
+            myMap.insert(pair<string, string>(keys.at(i), row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
         }
-        data.push_back(myMap);
+        data.push_back(myMap); //ใส่ทุกคู่ลงใน data
     }
         int choice;
     do {
@@ -40,7 +42,6 @@ int main() {
         displayMenu();
         cin >> choice;
         cin.ignore();
-
         switch(choice) {
             case 1:
                 system("cls");
@@ -79,18 +80,23 @@ int main() {
             case 7:
                 system("cls");
                 cout << "Exiting..." << endl;
-                system("shutdown /r /t 0");
+                exit(EXIT_SUCCESS);
                 break;
             default:
                 cout << "Invalid choice. Please try again." << endl;
-                break;
+                delay(1.5);
+                continue;
         }
         cin.ignore();
-        cin.get();
+        cin.get(); // รอกดEnter
     } while(choice != 7);
     
     return 0;
 }
 
-
-
+void delay(int seconds) {
+    clock_t start_time = clock(); // Get the initial clock time
+    while (clock() < start_time + seconds * CLOCKS_PER_SEC) {
+        // Loop until the current clock time exceeds the specified delay
+    }
+}
