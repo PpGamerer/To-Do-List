@@ -12,35 +12,11 @@ bool hasTextInColumn7(const std::string& row);
 
 
 int main() {
-    ifstream inputFile("C:\\Users\\Asus\\Documents\\To-Do-List-1\\data.csv");
-    ofstream outputFile("C:\\Users\\Asus\\Documents\\To-Do-List-1\\keep.csv");
-    string textline;
-    vector<string> rows;
-
-    // อ่านข้อมูลและเก็บไว้ใน vector
-    while (getline(inputFile, textline)) {
-        rows.push_back(textline);
-    }
-
-    // เรียงลำดับแถวตามเงื่อนไขที่กำหนด
-    stable_partition(rows.begin(), rows.end(), hasTextInColumn7);
-
-    // เขียนข้อมูลที่ถูกเรียงลงไฟล์ keep.csv
-    for (const auto& row : rows) {
-        outputFile << row << "\n";
-    }
-
-    cout << "comple" << endl;
-
-    //inputFile.close();
-    outputFile.close();
-    return 0;
-    //แสดงตาราง
     map<string,string> myMap;
     vector<map<string,string>> data; //เก็บ myMap แต่ละแถวไว้ใน data
     string textline2;
     ifstream read;
-    read.open("C:\\Users\\Asus\\Documents\\To-Do-List-1\\keep.csv");
+    read.open("keep.csv");
     getline(read,textline2); //บรรทัดแรก (หัวข้อประเภท)
     vector<string> keys = tokens(textline2, ","); //delimiter = ","
     vector<string> row;
@@ -52,6 +28,10 @@ int main() {
         }
         data.push_back(myMap);
     }
+    // เรียงลำดับแถวตามเงื่อนไขที่กำหนด
+    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
+    return hasTextInColumn7(row.at("!"));
+    });
     TodoList_table(data,keys);
 }
 
