@@ -26,30 +26,30 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
     }
     //ขอบตารางบน----
     for (int i = 0; i < col_count; i++) {
-            cout << "\033[1;33m" << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
+            cout << "\033[1;37m" << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
         } 
     cout << endl;
     stablePartitionByColumn7(data);
     //ประเภทข้อมูล(ข้อมูลแถวแรก)
     for (int i = 0; i < col_count; i++) {
-        cout << "\033[1;37m" << setw(col_sizes[i]) << left << keys.at(i)  << "\033[1;33m" << "|";
+        cout << "\033[1;33m" << setw(col_sizes[i]) << left << keys.at(i)  << "\033[1;37m" << "|";
     }
     cout << endl;
 
     //ขอบตารางและข้อมูลในตาราง --|--
     for (int i = 0; i < data_count; i++) {
         for (int j = 0; j < col_count; j++) {
-            cout << "\033[1;33m" << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
+            cout << "\033[1;37m" << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
         }
         cout << endl;
         for (int j = 0; j < col_count; j++) {
-            cout << "\033[1;37m" << setw(col_sizes[j]) << left << data[i][keys.at(j)] << "\033[1;33m" <<  "|";
+            cout << "\033[1;33m" << setw(col_sizes[j]) << left << data[i][keys.at(j)] << "\033[1;37m" <<  "|";
         }
         cout << endl; 
     }
     //ขอบตารางล่าง----
     for (int i = 0; i < col_count; i++) {
-            cout << "\033[1;33m" <<  setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
+            cout << "\033[1;37m" <<  setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
         } 
     cout << endl << "\033[1;32m";
 }
