@@ -66,7 +66,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-    std::cout << "Ender a Due Date : ";
+    std::cout << "Ender a Due Date (y/m/d) : ";
     getline(cin, input);
     newEntry.push_back(input);
     break;
