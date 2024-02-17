@@ -45,7 +45,7 @@ int main() {
         switch(choice) {
             case 1:
                 system("cls");
-                cout << "You chose View all To-do" << endl;
+                cout << "You chose View all To-do" << endl << "\033[1;33m" ;
                 findTodoUndone(data, keys);
                 break;
             case 2:

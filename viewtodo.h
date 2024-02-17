@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <set>
+#include <cstdlib>
 using namespace std;
 
 // Prototype functions
@@ -44,40 +45,40 @@ void TodoList_table(vector<map<string, string>> doneData, vector<map<string, str
     }
     // Print headers for both sets of data
     for (int i = 0; i < col_count; i++) {
-        std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
+        std::cout << "\033[1;37m" << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
     }
     std::cout << endl;
     for (int i = 0; i < col_count; i++) {
-        std::cout << setw(col_sizes[i]) << left << keys.at(i) << "|";
+        std::cout << "\033[1;33m"<< setw(col_sizes[i]) << left << keys.at(i) << "\033[1;37m" << "|";
     }
     std::cout << endl;
 
     // Print data for "done" tasks
     for (int i = 0; i < done_data_count; i++) {
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
+            std::cout << "\033[1;37m" << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
         }
         std::cout << endl;
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j] ) << left << doneData[i][keys.at(j)] << "|";
+            std::cout << "\033[1;33m" << setw(col_sizes[j] ) << left << doneData[i][keys.at(j)] << "\033[1;37m" << "|";
         }
         std::cout << endl;
     }
     // Print data for "undone" tasks
     for (int i = 0; i < undone_data_count; i++) {
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
+            std::cout << "\033[1;37m" << setw(col_sizes[j]) << setfill('-') << "" << setfill(' ') << "|";
         }
         std::cout << endl;
         for (int j = 0; j < col_count; j++) {
-            std::cout << setw(col_sizes[j] ) << left << undoneData[i][keys.at(j)] << "|";
+            std::cout << "\033[1;33m" << setw(col_sizes[j] ) << left << undoneData[i][keys.at(j)] <<"\033[1;37m" << "|";
         }
         std::cout << endl;
     }
     for (int i = 0; i < col_count; i++) {
-        std::cout << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
+        std::cout <<"\033[1;37m" << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
     } 
-    std::cout << endl;
+    std::cout << endl << "\033[1;32m"; 
 
     // ไม่ทำการเรียงลำดับข้อมูล
 
@@ -121,7 +122,7 @@ void displayAvailableCategories(const vector<map<string, string>>& data) {
         categories.insert(todo.at("Category"));
     }
     for (const auto& category : categories) {
-        cout << category << endl;
+        cout << " - " << category << endl;
     }
 }
 string selectCategory(const vector<map<string, string>>& data) {
