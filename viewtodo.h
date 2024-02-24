@@ -129,10 +129,10 @@ string selectCategory(const vector<map<string, string>>& data) {
     string findcategory;
     bool categoryFound = false;
     do {
-        cout << "Enter the category: ";
+        cout << "\033[1;32mEnter the category: ";
         getline(cin, findcategory);
          if (findcategory.empty()) {
-            cout << "Please enter a category." << endl;
+            cout << "\033[1;32mPlease enter a category." << endl;
             continue;
         }
         categoryFound = false;
@@ -143,7 +143,7 @@ string selectCategory(const vector<map<string, string>>& data) {
             }
         }
         if (!categoryFound) {
-            cout << "This category was not found. Please try again." << endl;
+            cout << "\033[1;31mThis category was not found. Please try again." << endl;
         }
     } while (!categoryFound);
 
@@ -166,7 +166,7 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
     // แสดงงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่กำหนด
     if (categoryUndoneData.empty())
     {
-        cout << "No undone tasks found for category: " << categoryToFind << endl;
+        cout << "\033[1;31mNo undone tasks found for category: " << categoryToFind << endl;
     }
     else
     {

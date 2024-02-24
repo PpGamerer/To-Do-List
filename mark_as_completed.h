@@ -15,10 +15,10 @@ string selectIDToMark(const vector<map<string, string>>& data) {
     string taskId;
     bool idFound = false;
     do {
-        cout << "Enter the ID of the task you want to mark as done: ";
+        cout << "\033[1;32mEnter the ID of the task you want to mark as done: ";
         getline(cin, taskId);
          if (taskId.empty()) {
-            cout << "Please enter an exist ID." << endl;
+            cout << "\033[1;32mPlease enter an exist ID." << endl;
             continue;
         }
         idFound = false;
@@ -30,7 +30,7 @@ string selectIDToMark(const vector<map<string, string>>& data) {
             }
         }
         if (!idFound) {
-            cout << "This ID was not found: " << taskId << endl;
+            cout << "\033[1;31mThis ID was not found: " << taskId << endl;
         }
     } while (!idFound);
 
@@ -67,10 +67,10 @@ void updateStatus(vector<map<string, string>>& data, const string& id, const vec
                 }
                 file.close();
             } else {
-                cout << "Unable to open file." << endl;
+                cout << "\033[1;31mUnable to open file." << endl;
             }
             return;
         }
     }
-    cout << "Task with ID " << id << " not found." << endl;
+    cout << "\033[1;31mTask with ID " << id << " \033[1;31mnot found." << endl;
 } 

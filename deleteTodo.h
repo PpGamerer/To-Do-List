@@ -15,10 +15,10 @@ string selectIDToDelete(const vector<map<string, string>>& data) {
     string findIDToDelete;
     bool idFound = false;
     do {
-        cout << "Enter ID of the To-Do entry you want to delete: ";
+        cout << "\033[1;32mEnter ID of the To-Do entry you want to delete: ";
         getline(cin, findIDToDelete);
          if (findIDToDelete.empty()) {
-            cout << "Please enter an exist ID." << endl;
+            cout << "\033[1;32mPlease enter an exist ID." << endl;
             continue;
         }
         idFound = false;
@@ -29,7 +29,7 @@ string selectIDToDelete(const vector<map<string, string>>& data) {
             }
         }
         if (!idFound) {
-            cout << "This ID was not found: " << findIDToDelete << endl;
+            cout << "\033[1;31mThis ID was not found: " << findIDToDelete << endl;
         }
     } while (!idFound);
 
@@ -71,11 +71,11 @@ void deleteTodo(const string& filename, vector<map<string, string>>& data, const
             }
             file.close();
             system("cls");
-            cout << "To-Do entry with ID " << id << " deleted successfully." << endl;
+            cout << "\033[1;32mTo-Do entry with ID " << id << " \033[1;32mdeleted successfully." << endl;
         } else {
-            cout << "Unable to open file to rewrite data." << endl;
+            cout << "\033[1;31mUnable to open file to rewrite data." << endl;
         }
     } else {
-        cout << "No To-Do entry found with ID " << id << "." << endl;
+        cout << "\033[1;31mNo To-Do entry found with ID " << id << "." << endl;
     }
 }

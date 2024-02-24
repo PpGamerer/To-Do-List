@@ -50,73 +50,73 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
 
     // Get user input for each field
     string input;
-    std::cout << "Enter ID: ";
+    std::cout << "\033[1;32mEnter ID: ";
     getline(cin, input);
     newEntry.push_back(input);
 
-    std::cout << "Enter Todo: ";
+    std::cout << "\033[1;32mEnter Todo: ";
     getline(cin, input);
     newEntry.push_back(input);
 
     input = "undone"; //status default is "undone"
     newEntry.push_back(input);
 
-    std::cout << "Add a Category? (y/n) : ";
+    std::cout << "\033[1;32mAdd a Category? (y/n) : ";
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-    std::cout << "Enter Category: ";
+    std::cout << "\033[1;32mEnter Category: ";
     getline(cin, input);
     newEntry.push_back(input);
     break;
     }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "No category";
+        input = "\033[1;31mNo category";
         newEntry.push_back(input);
         break;
     }
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
         getline(cin, input);
     }
 
-    std::cout << "Add a Due Date? (y/n) : ";
+    std::cout << "\033[1;32mAdd a Due Date? (y/n) : ";
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-    std::cout << "Ender a Due Date (y/m/d) : ";
+    std::cout << "\033[1;32mEnder a Due Date (y/m/d) : ";
     getline(cin, input);
     newEntry.push_back(input);
     break;
     }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "No date";
+        input = "\033[1;31mNo date";
         newEntry.push_back(input);
         break;
     }
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
         getline(cin, input);
     }
 
-    std::cout << "Add a Remarks? (y/n) : ";
+    std::cout << "\033[1;32mAdd a Remarks? (y/n) : ";
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-    std::cout << "Enter Remarks: ";
+    std::cout << "\033[1;32mEnter Remarks: ";
     getline(cin, input);
     newEntry.push_back(input);
     break;
     }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "None";
+        input = "\033[1;31mNone";
         newEntry.push_back(input);
         break;
     }
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
         getline(cin, input);
     }
     
-    std::cout << "Mark as important? (y/n) : ";
+    std::cout << "\033[1;32mMark as important? (y/n) : ";
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-        input = "!";
+        input = "\033[1;31m!";
         newEntry.push_back(input);
         break;
     }else if(input == "no" || input == "n" || input == "N" || input == "No"){
@@ -124,14 +124,14 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
         newEntry.push_back(input);
         break;
     }
-        cout << "Please enter only 'y' for yes or 'n' for no. (y/n) : ";
+        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
         getline(cin, input);
     }
 
 }
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
     string idToEdit;
-    cout << "Enter the ID you want to modify: ";
+    cout << "\033[1;32mEnter the ID you want to modify: ";
     getline(cin, idToEdit);
 
     // Find the index of the entry with the specified ID
@@ -140,7 +140,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
     });
 
     if (it != data.end()) {
-        cout << "Editing entry with ID: " << idToEdit << endl;
+        cout << "\033[1;32mEditing entry with ID: " << idToEdit << endl;
         // Remove the existing entry
         data.erase(it);
 
@@ -163,11 +163,11 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
                 outfile << endl;
             }
             outfile.close();
-            cout << "Data edited successfully and saved to data.csv!" << endl;
+            cout << "\033[1;32mData edited successfully and saved to data.csv!" << endl;
         } else {
-            cout << "Unable to open file for writing!" << endl;
+            cout << "\033[1;31mUnable to open file for writing!" << endl;
         }
     } else {
-        cout << "No entry found with ID: " << idToEdit << endl;
+        cout << "\033[1;31mNo entry found with ID: " << idToEdit << endl;
     }
 }
