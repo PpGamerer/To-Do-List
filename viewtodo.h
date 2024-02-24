@@ -131,13 +131,18 @@ string selectCategory(const vector<map<string, string>>& data) {
     do {
         cout << "\033[1;32mEnter the category: ";
         getline(cin, findcategory);
-         if (findcategory.empty()) {
+        // แปลงข้อความที่ผู้ใช้ป้อนเป็นตัวพิมพ์เล็กทั้งหมด
+        transform(findcategory.begin(), findcategory.end(), findcategory.begin(), ::tolower);
+        if (findcategory.empty()) {
             cout << "\033[1;32mPlease enter a category." << endl;
             continue;
         }
         categoryFound = false;
+        // แปลงหมวดหมู่ที่ได้จากข้อมูลเป็นตัวพิมพ์เล็กทั้งหมดเพื่อเปรียบเทียบ
         for (const auto& todo : data) {
-            if (todo.at("Category") == findcategory) {
+            string category = todo.at("Category");
+            transform(category.begin(), category.end(), category.begin(), ::tolower);
+            if (category == findcategory) {
                 categoryFound = true;
                 break;
             }
@@ -149,7 +154,8 @@ string selectCategory(const vector<map<string, string>>& data) {
 
 
     return findcategory;
-} 
+}
+
 
 void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& categoryToFind){          
     vector<map<string, string>> categoryUndoneData; // สร้างเวกเตอร์เพื่อเก็บงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่กำหนด
