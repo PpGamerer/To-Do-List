@@ -5,17 +5,39 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
+#include "viewtodo.h"
 using namespace std;
 
 // Function prototypes
-vector<string> tokens(string text, string delimiter);
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys);
-void getUserInput(vector<map<string, string>>& data, const vector<string>& keys); // เพิ่มฟังก์ชั่น getUserInput
 
 int main() {
     // Sample data
     vector<map<string, string>> data;
     vector<string> keys = {"ID", "Todo", "Status", "Category", "Due Date", "Remarks", "Important"};
+
+    // Read data from data.csv file
+    ifstream file("data.csv");
+    if (file.is_open()) {
+        string line;
+        // Read column headers
+        getline(file, line);
+        // Read each row of data
+        while (getline(file, line)) {
+            map<string, string> entry;
+            size_t pos = 0;
+            for (const auto& key : keys) {
+                size_t nextPos = line.find(",", pos);
+                entry[key] = line.substr(pos, nextPos - pos);
+                pos = nextPos + 1;
+            }
+            data.push_back(entry);
+        }
+        file.close();
+    } else {
+        cout << "\033[1;31mUnable to open file for reading!" << endl;
+        return 1;
+    }
 
     // Display the updated to-do list
     for (const auto& entry : data) {
@@ -31,143 +53,86 @@ int main() {
     return 0;
 }
 
-// Tokenize a string
-vector<string> tokens(string text, string delimiter) {
-    vector<string> key;
-    size_t found;
-    string token;
-    while ((found = text.find(delimiter)) != string::npos) {
-        token = text.substr(0, found);
-        key.push_back(token);
-        text.erase(0, found + delimiter.length());
-    }
-    key.push_back(text);
-    return key;
-}
-
-void getUserInput(vector<map<string, string>>& data, const vector<string>& keys) {  
-    vector<string> newEntry;
-
-    // Get user input for each field
-    string input;
-    std::cout << "\033[1;32mEnter ID: ";
-    getline(cin, input);
-    newEntry.push_back(input);
-
-    std::cout << "\033[1;32mEnter Todo: ";
-    getline(cin, input);
-    newEntry.push_back(input);
-
-    input = "undone"; //status default is "undone"
-    newEntry.push_back(input);
-
-    std::cout << "\033[1;32mAdd a Category? (y/n) : ";
-    getline(cin, input);
-    while(true){
-    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-    std::cout << "\033[1;32mEnter Category: ";
-    getline(cin, input);
-    newEntry.push_back(input);
-    break;
-    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "\033[1;31mNo category";
-        newEntry.push_back(input);
-        break;
-    }
-        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
-    }
-
-    std::cout << "\033[1;32mAdd a Due Date? (y/n) : ";
-    getline(cin, input);
-    while(true){
-    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-    std::cout << "\033[1;32mEnder a Due Date (y/m/d) : ";
-    getline(cin, input);
-    newEntry.push_back(input);
-    break;
-    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "\033[1;31mNo date";
-        newEntry.push_back(input);
-        break;
-    }
-        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
-    }
-
-    std::cout << "\033[1;32mAdd a Remarks? (y/n) : ";
-    getline(cin, input);
-    while(true){
-    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-    std::cout << "\033[1;32mEnter Remarks: ";
-    getline(cin, input);
-    newEntry.push_back(input);
-    break;
-    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "\033[1;31mNone";
-        newEntry.push_back(input);
-        break;
-    }
-        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
-    }
-    
-    std::cout << "\033[1;32mMark as important? (y/n) : ";
-    getline(cin, input);
-    while(true){
-    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-        input = "\033[1;31m!";
-        newEntry.push_back(input);
-        break;
-    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = " ";
-        newEntry.push_back(input);
-        break;
-    }
-        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
-        getline(cin, input);
-    }
-
-}
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
-    string idToEdit;
+    string inputId;
     cout << "\033[1;32mEnter the ID you want to modify: ";
-    getline(cin, idToEdit);
+    getline(cin, inputId);
 
-    // Find the index of the entry with the specified ID
-    auto it = find_if(data.begin(), data.end(), [&](const map<string, string>& entry) {
-        return entry.at(keys[0]) == idToEdit; // Assuming ID is the first key
+    // Find the entry with the given ID
+    auto entryToUpdate = find_if(data.begin(), data.end(), [&inputId](const map<string, string>& entry) {
+        return entry.at("ID") == inputId;
     });
 
-    if (it != data.end()) {
-        cout << "\033[1;32mEditing entry with ID: " << idToEdit << endl;
-        // Remove the existing entry
-        data.erase(it);
+    if (entryToUpdate != data.end()) {
+        // Get user input for each field
+        map<string, string> newEntry;
+        std::cout << "\033[1;32mEnter ID: ";
+        getline(cin, newEntry["ID"]);
 
-        // Call getUserInput to get new data
-        getUserInput(data, keys);
+        cout << "\033[1;32mEnter Todo: ";
+        getline(cin, newEntry["Todo"]);
+
+        cout << "\033[1;32mEnter Status: ";
+        getline(cin, newEntry["Status"]);
+
+        cout << "\033[1;32mAdd a Category? (y/n): ";
+        string input;
+        getline(cin, input);
+        if (input == "y" || input == "Y") {
+            cout << "\033[1;32mEnter Category: ";
+            getline(cin, newEntry["Category"]);
+        } else {
+            newEntry["Category"] = "\033[1;31mNo category";
+        }
+
+        cout << "\033[1;32mAdd a Due Date? (y/n): ";
+        getline(cin, input);
+        if (input == "y" || input == "Y") {
+            cout << "\033[1;32mEnter Due Date (y/m/d): ";
+            getline(cin, newEntry["Due Date"]);
+        } else {
+            newEntry["Due Date"] = "\033[1;31mNo date";
+        }
+
+        cout << "\033[1;32mAdd Remarks? (y/n): ";
+        getline(cin, input);
+        if (input == "y" || input == "Y") {
+            cout << "\033[1;32mEnter Remarks: ";
+            getline(cin, newEntry["Remarks"]);
+        } else {
+            newEntry["Remarks"] = "\033[1;31mNone";
+        }
+
+        cout << "\033[1;32mMark as important? (y/n): ";
+        getline(cin, input);
+        newEntry["Important"] = (input == "y" || input == "Y") ? "!" : " ";
+
+        // Replace old entry with new entry
+        *entryToUpdate = newEntry;
 
         // Write updated data to data.csv file
-        ofstream outfile("data.csv");
-        if (outfile.is_open()) {
-            for (const auto& entry : data) {
-                for (const auto& key : keys) {
-                    // Use const_iterator to prevent modifications
-                    auto it = entry.find(key);
-                    if (it != entry.end()) {
-                        outfile << it->second << ",";
-                    } else {
-                        outfile << ",";
-                    }
-                }
-                outfile << endl;
+        ofstream file("data.csv");
+        if (file.is_open()) {
+            // Write column headers
+            for (size_t i = 0; i < keys.size(); ++i) {
+                file << keys[i];
+                if (i != keys.size() - 1) file << ",";
+                else file << "\n";
             }
-            outfile.close();
+            // Write each row of data
+            for (const auto& row : data) {
+                for (size_t i = 0; i < keys.size(); ++i) {
+                    file << row.at(keys[i]);
+                    if (i != keys.size() - 1) file << ",";
+                    else file << "\n";
+                }
+            }
+            file.close();
             cout << "\033[1;32mData edited successfully and saved to data.csv!" << endl;
         } else {
             cout << "\033[1;31mUnable to open file for writing!" << endl;
         }
     } else {
-        cout << "\033[1;31mNo entry found with ID: " << idToEdit << endl;
+        cout << "\033[1;31mNo entry found with ID " << inputId << endl;
     }
 }
