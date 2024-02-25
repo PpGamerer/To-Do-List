@@ -48,6 +48,7 @@ int main() {
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
     TodoList_table(data,keys);
     string inputId;
+    string input;
     cout << "\033[1;32mEnter the ID you want to modify: ";
     getline(cin, inputId);
 
@@ -65,8 +66,9 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
         cout << "\033[1;32mEnter Todo: ";
         getline(cin, newEntry["Todo"]);
 
-        cout << "\033[1;32mEnter Status: ";
-        getline(cin, newEntry["Status"]);
+        cout << "\033[1;32mStatus is done? (y/n): ";
+        getline(cin, input);
+        newEntry["Status"] = (input == "y" || input == "Y") ? "done" : "undone";
 
         cout << "\033[1;32mAdd a Category? (y/n): ";
         string input;
@@ -75,7 +77,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             cout << "\033[1;32mEnter Category: ";
             getline(cin, newEntry["Category"]);
         } else {
-            newEntry["Category"] = "\033[1;33mNo category";
+            newEntry["Category"] = "No category";
         }
 
         cout << "\033[1;32mAdd a Due Date? (y/n): ";
@@ -84,7 +86,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             cout << "\033[1;32mEnter Due Date (y/m/d): ";
             getline(cin, newEntry["Due Date"]);
         } else {
-            newEntry["Due Date"] = "\033[1;33mNo date";
+            newEntry["Due Date"] = "mNo date";
         }
 
         cout << "\033[1;32mAdd Remarks? (y/n): ";
@@ -93,7 +95,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             cout << "\033[1;32mEnter Remarks: ";
             getline(cin, newEntry["Remarks"]);
         } else {
-            newEntry["Remarks"] = "\033[1;33mNone";
+            newEntry["Remarks"] = "None";
         }
 
         cout << "\033[1;32mMark as important? (y/n): ";
