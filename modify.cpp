@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
-#include "viewtodo.h"
+#include "table.h"
 using namespace std;
 
 // Function prototypes
@@ -39,14 +39,6 @@ int main() {
         return 1;
     }
 
-    // Display the updated to-do list
-    for (const auto& entry : data) {
-        for (const auto& pair : entry) {
-            cout << pair.first << ": " << pair.second << endl;
-        }
-        cout << endl;
-    }
-
     // Edit an existing to-do entry
     modifyTodo(data, keys);
 
@@ -54,6 +46,7 @@ int main() {
 }
 
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
+    TodoList_table(data,keys);
     string inputId;
     cout << "\033[1;32mEnter the ID you want to modify: ";
     getline(cin, inputId);
@@ -82,7 +75,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             cout << "\033[1;32mEnter Category: ";
             getline(cin, newEntry["Category"]);
         } else {
-            newEntry["Category"] = "\033[1;31mNo category";
+            newEntry["Category"] = "\033[1;33mNo category";
         }
 
         cout << "\033[1;32mAdd a Due Date? (y/n): ";
@@ -91,7 +84,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             cout << "\033[1;32mEnter Due Date (y/m/d): ";
             getline(cin, newEntry["Due Date"]);
         } else {
-            newEntry["Due Date"] = "\033[1;31mNo date";
+            newEntry["Due Date"] = "\033[1;33mNo date";
         }
 
         cout << "\033[1;32mAdd Remarks? (y/n): ";
@@ -100,7 +93,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             cout << "\033[1;32mEnter Remarks: ";
             getline(cin, newEntry["Remarks"]);
         } else {
-            newEntry["Remarks"] = "\033[1;31mNone";
+            newEntry["Remarks"] = "\033[1;33mNone";
         }
 
         cout << "\033[1;32mMark as important? (y/n): ";
