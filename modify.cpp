@@ -86,7 +86,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             cout << "\033[1;32mEnter Due Date (y/m/d): ";
             getline(cin, newEntry["Due Date"]);
         } else {
-            newEntry["Due Date"] = "mNo date";
+            newEntry["Due Date"] = "No date";
         }
 
         cout << "\033[1;32mAdd Remarks? (y/n): ";
