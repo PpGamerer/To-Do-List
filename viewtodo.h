@@ -182,4 +182,11 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
     } else {
         TodoList_table(categoryUndoneData, vector<map<string, string>>(), keys);
     }
+<<<<<<< HEAD
 }
+=======
+}
+
+
+
+>>>>>>> 77749a82453333e6a0c3fa2a293f34d95803e2ef

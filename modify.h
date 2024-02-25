@@ -10,8 +10,48 @@ using namespace std;
 // Function prototypes
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys);
 string selectIDToModify(const vector<map<string, string>>& data);
+<<<<<<< HEAD:modify.h
 
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
+=======
+
+int main() {
+    // Sample data
+    vector<map<string, string>> data;
+    vector<string> keys = {"ID", "Todo", "Status", "Category", "Due Date", "Remarks", "Important"};
+
+    // Read data from data.csv file
+    ifstream file("data.csv");
+    if (file.is_open()) {
+        string line;
+        // Read column headers
+        getline(file, line);
+        // Read each row of data
+        while (getline(file, line)) {
+            map<string, string> entry;
+            size_t pos = 0;
+            for (const auto& key : keys) {
+                size_t nextPos = line.find(",", pos);
+                entry[key] = line.substr(pos, nextPos - pos);
+                pos = nextPos + 1;
+            }
+            data.push_back(entry);
+        }
+        file.close();
+    } else {
+        cout << "\033[1;31mUnable to open file for reading!" << endl;
+        return 1;
+    }
+
+    // Edit an existing to-do entry
+    modifyTodo(data, keys);
+    
+    return 0;
+}
+
+void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
+    TodoList_table(data,keys);
+>>>>>>> 77749a82453333e6a0c3fa2a293f34d95803e2ef:modify.cpp
     string inputId = selectIDToModify(data);
     string input;
     // Find the entry with the given ID
@@ -117,4 +157,8 @@ string selectIDToModify(const vector<map<string, string>>& data) {
 
 
     return findIDTomodify;
+<<<<<<< HEAD:modify.h
 }
+=======
+}
+>>>>>>> 77749a82453333e6a0c3fa2a293f34d95803e2ef:modify.cpp
