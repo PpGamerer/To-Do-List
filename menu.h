@@ -21,7 +21,8 @@ void displayMenu(){
     cout << "\033[1;31m|\033[1;33m 4. Add new to do                \033[1;31m|" << endl;
     cout << "\033[1;31m|\033[1;33m 5. Delete a To-do               \033[1;31m|" << endl;
     cout << "\033[1;31m|\033[1;33m 6. Mark as completed            \033[1;31m|" << endl;
-    cout << "\033[1;31m|\033[1;33m 7. Exit                         \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 7. Modify a To-do               \033[1;31m|" << endl;
+    cout << "\033[1;31m|\033[1;33m 8. Exit                         \033[1;31m|" << endl;
     cout << "\033[1;31m|                                 \033[1;31m|" << endl;
     cout << "\033[1;31m***********************************" << endl;
     cout << "\033[1;32m  Enter your choice: ";

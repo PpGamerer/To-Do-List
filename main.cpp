@@ -14,6 +14,7 @@
 #include "deleteTodo.h"
 #include "table.h"
 #include "mark_as_completed.h"
+#include "modify.h"
 
 using namespace std;
 void delay(int sec);
@@ -78,6 +79,12 @@ int main() {
                 updateStatus(data, selectIDToMark(data), keys);
                 break;
             case 7:
+                system("cls");
+                cout << "\033[1;33mYou chose Modify a To-do" << endl;
+                TodoList_table(data,keys);
+                modifyTodo(data, keys);
+                break;
+            case 8:
                 system("cls");
                 cout << "\033[1;31mExiting..." << endl;
                 exit(EXIT_SUCCESS);

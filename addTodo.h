@@ -217,8 +217,8 @@ void reloadData(vector<map<string, string>>& data, const vector<string>& keys){
     read.open("data.csv");
     getline(read,textline);  // Skip the header line
 
-    // Create a vector to hold pairs of importance and map
-    vector<pair<int, map<string, string>>> sortedData;
+    // Create a vector to hold pairs of timestamp and map
+    vector<pair<string, map<string, string>>> sortedData;
 
     // Read each line from the file
     while (getline(read, textline)) {
@@ -229,15 +229,20 @@ void reloadData(vector<map<string, string>>& data, const vector<string>& keys){
         for (size_t i = 0; i < keys.size(); i++) {
             myMap.insert(pair<string, string>(keys.at(i), row[i]));
         }
-        // Determine the importance of the task
-        int importance = (myMap.find("!") != myMap.end() && myMap.at("!") == "!") ? 1 : 0;
-        // Store the pair of importance and map in the vector
-        sortedData.push_back(make_pair(importance, myMap));
+        // Determine the timestamp of the task (assuming timestamp is stored in the "Timestamp" column)
+        string timestamp = myMap["Timestamp"];
+        // Store the pair of timestamp and map in the vector
+        sortedData.push_back(make_pair(timestamp, myMap));
     }
     read.close();
 
-    // Sort the vector based on the importance (important tasks first)
+    // Sort the vector based on the timestamp (latest entries first)
     sort(sortedData.rbegin(), sortedData.rend());
+
+    // Sort the vector based on importance (important tasks first)
+    stable_partition(sortedData.begin(), sortedData.end(), [](const pair<string, map<string, string>>& p) {
+        return (p.second.find("!") != p.second.end() && p.second.at("!") == "!");
+    });
 
     // Add the sorted data to the data vector
     for (const auto& pair : sortedData) {
