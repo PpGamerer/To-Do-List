@@ -36,12 +36,15 @@ int main() {
         }
         data.push_back(myMap); //ใส่ทุกคู่ลงใน data
     }
-        int choice;
+    int choice;
+    bool continueExecution = true;
     do {
         stablePartitionByColumn7(data);
         displayMenu();
-        cin >> choice;
-        cin.ignore();
+        if (continueExecution) {
+            cin >> choice;
+            cin.ignore();
+        }
         switch(choice) {
             case 1:
                 system("cls");
@@ -71,7 +74,7 @@ int main() {
                 deleteTodo("data.csv", data, keys, selectIDToDelete(data));
                 TodoList_table(data,keys);
                 break;
-             case 6:
+            case 6:
                 system("cls");
                 cout << "\033[1;33mYou chose Mark as completed" << endl;
                 findTodoUndone(data, keys);
@@ -87,10 +90,24 @@ int main() {
                 delay(1.5);
                 continue;
         }
-        cin.ignore();
-        cin.get(); // รอกดEnter
-    } while(choice != 7);
-    
+        
+        cout << "Would you like to:\n1. Go to Menu\n2. End\nYour choice: ";
+        int continueChoice;
+        cin >> continueChoice;
+        if (continueChoice == 1) {
+            continueExecution = true;
+            choice = 0; // Reset choice to force re-entry to the switch statement
+        }
+        else if (continueChoice == 2)
+            continueExecution = false;
+        else {
+            cout << "Invalid choice. Exiting..." << endl;
+            continueExecution = false;
+        }
+        cin.ignore(); // Clear input buffer
+        cin.get(); // Wait for Enter key
+    } while(continueExecution);
+
     return 0;
 }
 
