@@ -10,6 +10,7 @@ using namespace std;
 
 // Function prototypes
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys);
+string selectIDToModify(const vector<map<string, string>>& data);
 
 int main() {
     // Sample data
@@ -41,17 +42,14 @@ int main() {
 
     // Edit an existing to-do entry
     modifyTodo(data, keys);
-
+    
     return 0;
 }
 
 void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
     TodoList_table(data,keys);
-    string inputId;
+    string inputId = selectIDToModify(data);
     string input;
-    cout << "\033[1;32mEnter the ID you want to modify: ";
-    getline(cin, inputId);
-
     // Find the entry with the given ID
     auto entryToUpdate = find_if(data.begin(), data.end(), [&inputId](const map<string, string>& entry) {
         return entry.at("ID") == inputId;
@@ -71,7 +69,6 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
         newEntry["Status"] = (input == "y" || input == "Y") ? "done" : "undone";
 
         cout << "\033[1;32mAdd a Category? (y/n): ";
-        string input;
         getline(cin, input);
         if (input == "y" || input == "Y") {
             cout << "\033[1;32mEnter Category: ";
@@ -130,4 +127,30 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
     } else {
         cout << "\033[1;31mNo entry found with ID " << inputId << endl;
     }
+}
+
+string selectIDToModify(const vector<map<string, string>>& data) {
+    string findIDTomodify;
+    bool idFound = false;
+    do {
+        cout << "\033[1;32mEnter ID of the To-Do entry you want to modify: ";
+        getline(cin, findIDTomodify);
+         if (findIDTomodify.empty()) {
+            cout << "\033[1;32mPlease enter an exist ID." << endl;
+            continue;
+        }
+        idFound = false;
+        for (const auto& todo : data) {
+            if (todo.at("ID") == findIDTomodify) {
+                idFound = true;
+                break;
+            }
+        }
+        if (!idFound) {
+            cout << "\033[1;31mThis ID was not found: " << findIDTomodify << endl;
+        }
+    } while (!idFound);
+
+
+    return findIDTomodify;
 }
