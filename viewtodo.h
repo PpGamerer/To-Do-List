@@ -135,18 +135,18 @@ string selectCategory(const vector<map<string, string>>& data) {
     do {
         cout << "\033[1;32mEnter the category: ";
         getline(cin, findcategory);
-        // แปลงข้อความที่ผู้ใช้ป้อนเป็นตัวพิมพ์เล็กทั้งหมด
+        // Convert the user input to lowercase
         transform(findcategory.begin(), findcategory.end(), findcategory.begin(), ::tolower);
         if (findcategory.empty()) {
             cout << "\033[1;32mPlease enter a category." << endl;
             continue;
         }
         if (findcategory == "no category") {
-            cout << "\033[1;31m'No category' is not a valid option. Please try again." << endl;
-            continue;
+            categoryFound = true; // Set categoryFound to true to exit the loop
+            break;
         }
         categoryFound = false;
-        // แปลงหมวดหมู่ที่ได้จากข้อมูลเป็นตัวพิมพ์เล็กทั้งหมดเพื่อเปรียบเทียบ
+        // Convert categories from data to lowercase for comparison
         for (const auto& todo : data) {
             string category = todo.at("Category");
             transform(category.begin(), category.end(), category.begin(), ::tolower);
@@ -162,8 +162,6 @@ string selectCategory(const vector<map<string, string>>& data) {
 
     return findcategory;
 }
-
-
 
 void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& categoryToFind) {          
     vector<map<string, string>> categoryUndoneData; // Vector to store undone tasks in the specified category
