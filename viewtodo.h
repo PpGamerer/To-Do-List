@@ -119,12 +119,15 @@ void displayAvailableCategories(const vector<map<string, string>>& data) {
     cout << "Categories available:" << endl;
     set<string> categories; // Use a set to avoid duplicates
     for (const auto& todo : data) {
-        categories.insert(todo.at("Category"));
+        if (todo.at("Status") == "undone") { // Check if the task is undone
+            categories.insert(todo.at("Category"));
+        }
     }
     for (const auto& category : categories) {
         cout << " - " << category << endl;
     }
 }
+
 string selectCategory(const vector<map<string, string>>& data) {
     string findcategory;
     bool categoryFound = false;
