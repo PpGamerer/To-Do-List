@@ -166,25 +166,21 @@ string selectCategory(const vector<map<string, string>>& data) {
 
 
 void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& categoryToFind) {          
-    if (categoryToFind == "no category") {
-        cout << "\033[1;31mNo category specified." << endl;
-        return;
-    }
+    vector<map<string, string>> categoryUndoneData; // Vector to store undone tasks in the specified category
 
-    vector<map<string, string>> categoryUndoneData; // สร้างเวกเตอร์เพื่อเก็บงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่กำหนด
-
-    // เก็บงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่ระบุ
+    // Search for undone tasks with the specified category or "no category"
     for (const auto& todo : data) {
-        if (todo.at("Category") == categoryToFind && todo.at("Status") == "undone") { // ตรวจสอบว่างานอยู่ในหมวดหมู่และยังไม่เสร็จสิ้น
+        if ((todo.at("Category") == categoryToFind || todo.at("Category") == "no category") && todo.at("Status") == "undone") {
             categoryUndoneData.push_back(todo);
         }
     }
 
-    // แสดงงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่กำหนด
+    // Display the tasks found
     if (categoryUndoneData.empty()) {
         cout << "\033[1;31mNo undone tasks found for category: " << categoryToFind << endl;
     } else {
         TodoList_table(categoryUndoneData, vector<map<string, string>>(), keys);
     }
 }
+
 
