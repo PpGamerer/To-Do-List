@@ -4,4 +4,5 @@ ID,Todo,Status,Category,Due Date,Remarks,Important
 2,clean a house and wash dishes,done,housework,7/2/2024,put in a dishwasher,
 10,nothing,undone,No category,No date,None,
 6,have lunch,done,No category,No date,None, 
-222,iaj,undone,school,[1;31mNo date,fdf,[1;31m!
+222,iaj,undone,school,No date,fdf,!
+
