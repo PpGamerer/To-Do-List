@@ -92,7 +92,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     newEntry.push_back(input);
     break;
     }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "\033[1;31mNo category";
+        input = "No category";
         newEntry.push_back(input);
         break;
     }
@@ -138,7 +138,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
             }
             break;
         } else if (input == "no" || input == "n" || input == "N" || input == "No") {
-            input = "\033[1;31mNo date";
+            input = "No date";
             newEntry.push_back(input);
             break;
         }
@@ -167,7 +167,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     newEntry.push_back(input);
     break;
     }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "\033[1;31mNone";
+        input = "None";
         newEntry.push_back(input);
         break;
     }
@@ -179,7 +179,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
-        input = "\033[1;31m!";
+        input = "!";
         newEntry.push_back(input);
         break;
     }else if(input == "no" || input == "n" || input == "N" || input == "No"){
