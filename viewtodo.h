@@ -128,6 +128,7 @@ void displayAvailableCategories(const vector<map<string, string>>& data) {
     }
 }
 
+
 string selectCategory(const vector<map<string, string>>& data) {
     string findcategory;
     bool categoryFound = false;
