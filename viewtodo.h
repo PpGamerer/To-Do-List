@@ -129,27 +129,33 @@ string selectCategory(const vector<map<string, string>>& data) {
     string findcategory;
     bool categoryFound = false;
     do {
-        cout << "Enter the category: ";
+        cout << "\033[1;32mEnter the category: ";
         getline(cin, findcategory);
-         if (findcategory.empty()) {
-            cout << "Please enter a category." << endl;
+        // แปลงข้อความที่ผู้ใช้ป้อนเป็นตัวพิมพ์เล็กทั้งหมด
+        transform(findcategory.begin(), findcategory.end(), findcategory.begin(), ::tolower);
+        if (findcategory.empty()) {
+            cout << "\033[1;32mPlease enter a category." << endl;
             continue;
         }
         categoryFound = false;
+        // แปลงหมวดหมู่ที่ได้จากข้อมูลเป็นตัวพิมพ์เล็กทั้งหมดเพื่อเปรียบเทียบ
         for (const auto& todo : data) {
-            if (todo.at("Category") == findcategory) {
+            string category = todo.at("Category");
+            transform(category.begin(), category.end(), category.begin(), ::tolower);
+            if (category == findcategory) {
                 categoryFound = true;
                 break;
             }
         }
         if (!categoryFound) {
-            cout << "This category was not found. Please try again." << endl;
+            cout << "\033[1;31mThis category was not found. Please try again." << endl;
         }
     } while (!categoryFound);
 
 
     return findcategory;
-} 
+}
+
 
 void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& categoryToFind){          
     vector<map<string, string>> categoryUndoneData; // สร้างเวกเตอร์เพื่อเก็บงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่กำหนด
@@ -166,7 +172,7 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
     // แสดงงานที่ยังไม่เสร็จสิ้นในหมวดหมู่ที่กำหนด
     if (categoryUndoneData.empty())
     {
-        cout << "No undone tasks found for category: " << categoryToFind << endl;
+        cout << "\033[1;31mNo undone tasks found for category: " << categoryToFind << endl;
     }
     else
     {

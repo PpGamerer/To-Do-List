@@ -45,45 +45,45 @@ int main() {
         switch(choice) {
             case 1:
                 system("cls");
-                cout << "You chose View all To-do" << endl << "\033[1;33m" ;
+                cout << "\033[1;33mYou chose View all To-do" << endl << "\033[1;33m" ;
                 findTodoUndone(data, keys);
                 break;
             case 2:
                 system("cls");
-                cout << "You chose View completed To-do" << endl;
+                cout << "\033[1;33mYou chose View completed To-do" << endl;
                 findTodoDone(data, keys);
                 break;
             case 3:
                 system("cls");
-                cout << "You chose View all To-do from category" << endl;
+                cout << "\033[1;33mYou chose View all To-do from category" << endl;
                 displayAvailableCategories(data);
                 findTodoByCategory(data, keys, selectCategory(data));
                 break;
             case 4:
                 system("cls");
-                cout << "You chose Add new To-do" << endl;
+                cout << "\033[1;33mYou chose Add new To-do" << endl;
                 getUserInput(data,keys);
                 break;
             case 5:
                 system("cls");
-                cout << "You chose Delete a To-do" << endl;
+                cout << "\033[1;33mYou chose Delete a To-do" << endl;
                 TodoList_table(data,keys);
                 deleteTodo("data.csv", data, keys, selectIDToDelete(data));
                 TodoList_table(data,keys);
                 break;
              case 6:
                 system("cls");
-                cout << "You chose Mark as completed" << endl;
+                cout << "\033[1;33mYou chose Mark as completed" << endl;
                 findTodoUndone(data, keys);
                 updateStatus(data, selectIDToMark(data), keys);
                 break;
             case 7:
                 system("cls");
-                cout << "Exiting..." << endl;
+                cout << "\033[1;31mExiting..." << endl;
                 exit(EXIT_SUCCESS);
                 break;
             default:
-                cout << "Invalid choice. Please try again." << endl;
+                cout << "\033[1;31mInvalid choice. Please try again." << endl;
                 delay(1.5);
                 continue;
         }
