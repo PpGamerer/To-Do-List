@@ -211,19 +211,36 @@ vector<string> tokens(string text,string delimiter) { //แยกข้อมู
 }
 
 void reloadData(vector<map<string, string>>& data, const vector<string>& keys){
-    data.clear(); //เคลียร์ไฟล์ data.csv
+    data.clear(); // Clear the data vector
     string textline;
     ifstream read;
     read.open("data.csv");
-    getline(read,textline);  //บรรทัดแรก (หัวข้อประเภท)
-    vector<string> row;
-    while (getline(read, textline)) { // อ่านทีละแถวจนหมดไฟล์
-        row = tokens(textline, ",");  // Extract data for each row
+    getline(read,textline);  // Skip the header line
+
+    // Create a vector to hold pairs of importance and map
+    vector<pair<int, map<string, string>>> sortedData;
+
+    // Read each line from the file
+    while (getline(read, textline)) {
+        // Extract data for each row
+        vector<string> row = tokens(textline, ",");
         map<string, string> myMap;
-        for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
-            myMap.insert(pair<string, string>(keys.at(i), row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
+        // Create a map for each row
+        for (size_t i = 0; i < keys.size(); i++) {
+            myMap.insert(pair<string, string>(keys.at(i), row[i]));
         }
-        data.push_back(myMap); 
+        // Determine the importance of the task
+        int importance = (myMap.find("!") != myMap.end() && myMap.at("!") == "!") ? 1 : 0;
+        // Store the pair of importance and map in the vector
+        sortedData.push_back(make_pair(importance, myMap));
     }
     read.close();
+
+    // Sort the vector based on the importance (important tasks first)
+    sort(sortedData.rbegin(), sortedData.rend());
+
+    // Add the sorted data to the data vector
+    for (const auto& pair : sortedData) {
+        data.push_back(pair.second);
+    }
 }
