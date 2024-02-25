@@ -26,10 +26,10 @@ int main() {
     ifstream read;
 
     read.open("data.csv");
-    getline(read, textline); //บรรทัดแรก (หัวข้อประเภท)
+    std::getline(read, textline); //บรรทัดแรก (หัวข้อประเภท)
     vector<string> keys = tokens(textline, ","); //แยกตามหัวข้อ ใช้delimiter = ","
     vector<string> row;
-    while (getline(read, textline)) { //อ่านทีละแถวจนหมดไฟล์
+    while (std::getline(read, textline)) { //อ่านทีละแถวจนหมดไฟล์
         row = tokens(textline, ",");  //delimiter = ","
         myMap.clear(); //เคลียร์mapก่อนpair
         for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
@@ -46,51 +46,51 @@ int main() {
         switch(choice) {
             case 1:
                 system("cls");
-                cout << "\033[1;33mYou chose View all To-do" << endl << "\033[1;33m" ;
+                std::cout << "\033[1;33mYou chose View all To-do" << endl << "\033[1;33m" ;
                 findTodoUndone(data, keys);
                 break;
             case 2:
                 system("cls");
-                cout << "\033[1;33mYou chose View completed To-do" << endl;
+                std::cout << "\033[1;33mYou chose View completed To-do" << endl;
                 findTodoDone(data, keys);
                 break;
             case 3:
                 system("cls");
-                cout << "\033[1;33mYou chose View all To-do from category" << endl;
+                std::cout << "\033[1;33mYou chose View all To-do from category" << endl;
                 displayAvailableCategories(data);
                 findTodoByCategory(data, keys, selectCategory(data));
                 break;
             case 4:
                 system("cls");
-                cout << "\033[1;33mYou chose Add new To-do" << endl;
+                std::cout << "\033[1;33mYou chose Add new To-do" << endl;
                 getUserInput(data,keys);
                 break;
             case 5:
                 system("cls");
-                cout << "\033[1;33mYou chose Delete a To-do" << endl;
+                std::cout << "\033[1;33mYou chose Delete a To-do" << endl;
                 TodoList_table(data,keys);
                 deleteTodo("data.csv", data, keys, selectIDToDelete(data));
                 TodoList_table(data,keys);
                 break;
              case 6:
                 system("cls");
-                cout << "\033[1;33mYou chose Mark as completed" << endl;
+                std::cout << "\033[1;33mYou chose Mark as completed" << endl;
                 findTodoUndone(data, keys);
                 updateStatus(data, selectIDToMark(data), keys);
                 break;
             case 7:
                 system("cls");
-                cout << "\033[1;33mYou chose Modify a To-do" << endl;
+                std::cout << "\033[1;33mYou chose Modify a To-do" << endl;
                 TodoList_table(data,keys);
                 modifyTodo(data, keys);
                 break;
             case 8:
                 system("cls");
-                cout << "\033[1;31mExiting..." << endl;
+                std::cout << "\033[1;31mExiting..." << endl;
                 exit(EXIT_SUCCESS);
                 break;
             default:
-                cout << "\033[1;31mInvalid choice. Please try again." << endl;
+                std::cout << "\033[1;31mInvalid choice. Please try again." << endl;
                 delay(1.5);
                 continue;
         }
