@@ -104,8 +104,6 @@ int main() {
             cout << "Invalid choice. Exiting..." << endl;
             continueExecution = false;
         }
-        cin.ignore(); // Clear input buffer
-        cin.get(); // Wait for Enter key
     } while(continueExecution);
 
     return 0;
