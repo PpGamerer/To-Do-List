@@ -165,16 +165,34 @@ string selectCategory(const vector<map<string, string>>& data) {
 }
 
 
-void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& categoryToFind) {          
+void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& categoryToFind) {
     vector<map<string, string>> categoryUndoneData; // Vector to store undone tasks in the specified category
 
     // Search for undone tasks with the specified category or "no category"
-    for (const auto& todo : data) {
-        // Include tasks with the specified category or "no category" that are undone
-        if ((todo.at("Category") == categoryToFind) && todo.at("Status") == "undone") {
-            categoryUndoneData.push_back(todo);
+    if (categoryToFind == "no category" || categoryToFind == "No category") {
+        // Include tasks with no category that are undone
+        for (const auto& todo : data) {
+            if ((todo.at("Category") == "no category" || todo.at("Category") == "No category") && todo.at("Status") == "undone") {
+                categoryUndoneData.push_back(todo);
+            }
+        }
+    } else {
+        // Include tasks with the specified category that are undone
+        bool categoryFound = false;
+        for (const auto& todo : data) {
+            if (todo.at("Category") == categoryToFind && todo.at("Status") == "undone") {
+                categoryUndoneData.push_back(todo);
+                categoryFound = true;
+            }
+        }
+        // Check if the category was found
+        if (!categoryFound) {
+            cout << "\033[1;31mNo undone tasks found for category: " << categoryToFind << endl;
+            return;
         }
     }
+
+    cout << "Number of tasks found: " << categoryUndoneData.size() << endl; // Debug print
 
     // Display the tasks found
     if (categoryUndoneData.empty()) {
@@ -183,3 +201,6 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
         TodoList_table(categoryUndoneData, vector<map<string, string>>(), keys);
     }
 }
+
+
+
