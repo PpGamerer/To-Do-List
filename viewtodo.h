@@ -170,10 +170,8 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
             if (todo.at("Status") == "undone" && todo.at("Category").empty()) {
                 categoryUndoneData.push_back(todo);
             }
-        } else {
-            if (todo.at("Category") == categoryToFind && todo.at("Status") == "undone") {
-                categoryUndoneData.push_back(todo);
-            }
+        } else if (todo.at("Category") == categoryToFind && todo.at("Status") == "undone") {
+            categoryUndoneData.push_back(todo);
         }
     }
     // Display the tasks found
@@ -183,3 +181,4 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
         TodoList_table(categoryUndoneData, vector<map<string, string>>(), keys);
     }
 }
+
