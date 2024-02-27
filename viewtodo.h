@@ -142,7 +142,7 @@ string selectCategory(const vector<map<string, string>>& data) {
             continue;
         }
         // Allow "no category" as a valid option
-        if (findcategory == "no category") {
+        if (findcategory == "nocategory") {
             categoryFound = true;
             break;
         }
