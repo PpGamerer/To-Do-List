@@ -14,6 +14,7 @@
 #include "deleteTodo.h"
 #include "table.h"
 #include "mark_as_completed.h"
+#include "modify.h"
 
 using namespace std;
 void delay(int sec);
@@ -45,27 +46,83 @@ int main() {
             cin >> choice;
             cin.ignore();
         }
+        int continueChoice;       
         switch(choice) {
             case 1:
                 system("cls");
                 cout << "\033[1;33mYou chose View all To-do" << endl << "\033[1;33m" ;
                 findTodoUndone(data, keys);
+                    cout << "Would you like to:\n1. Go to Menu\n2. End\nYour choice: ";
+                    cin >> continueChoice;
+                    if (continueChoice == 1) {
+                        continueExecution = true;
+                        choice = 0; // Reset choice to force re-entry to the switch statement
+                    }
+                    else if (continueChoice == 2)
+                        continueExecution = false;
+                    else {
+                        cout << "Invalid choice. Exiting..." << endl;
+                        continueExecution = false;
+                    }
                 break;
+            
             case 2:
                 system("cls");
                 cout << "\033[1;33mYou chose View completed To-do" << endl;
                 findTodoDone(data, keys);
+                    cout << "Would you like to:\n1. Go to Menu\n2. End\nYour choice: ";
+                    cin >> continueChoice;
+                    if (continueChoice == 1) {
+                        continueExecution = true;
+                        choice = 0; // Reset choice to force re-entry to the switch statement
+                    }
+                    else if (continueChoice == 2)
+                        continueExecution = false;
+                    else {
+                        cout << "Invalid choice. Exiting..." << endl;
+                        continueExecution = false;
+                    }
                 break;
+            
             case 3:
                 system("cls");
                 cout << "\033[1;33mYou chose View all To-do from category" << endl;
                 displayAvailableCategories(data);
                 findTodoByCategory(data, keys, selectCategory(data));
+                    cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    cin >> continueChoice;
+                    if (continueChoice == 1) {
+                        continueExecution = true;
+                        choice = 0; // Reset choice to force re-entry to the switch statement
+                    }
+                    else if (continueChoice == 2)
+                        continueExecution = false;
+                    else if (continueChoice == 3) {
+                        continueExecution = true;
+                        choice = 3; // Set choice to 7 to loop back to case 
+                    } 
+                    else {
+                        cout << "Invalid choice. Exiting..." << endl;
+                        continueExecution = false;
+                    }
                 break;
+
             case 4:
                 system("cls");
                 cout << "\033[1;33mYou chose Add new To-do" << endl;
                 getUserInput(data,keys);
+                cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    cin >> continueChoice;
+                    if (continueChoice == 1) {
+                        continueExecution = true;
+                        choice = 0; // Reset choice to force re-entry to the switch statement
+                    }
+                    else if (continueChoice == 2)
+                        continueExecution = false;
+                    else {
+                        cout << "Invalid choice. Exiting..." << endl;
+                        continueExecution = false;
+                    }
                 break;
             case 5:
                 system("cls");
@@ -73,16 +130,68 @@ int main() {
                 TodoList_table(data,keys);
                 deleteTodo("data.csv", data, keys, selectIDToDelete(data));
                 TodoList_table(data,keys);
+                cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    cin >> continueChoice;
+                    if (continueChoice == 1) {
+                        continueExecution = true;
+                        choice = 0; // Reset choice to force re-entry to the switch statement
+                    }
+                    else if (continueChoice == 2)
+                        continueExecution = false;
+                    else {
+                        cout << "Invalid choice. Exiting..." << endl;
+                        continueExecution = false;
+                    }
                 break;
             case 6:
                 system("cls");
                 cout << "\033[1;33mYou chose Mark as completed" << endl;
                 findTodoUndone(data, keys);
                 updateStatus(data, selectIDToMark(data), keys);
+                    cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    cin >> continueChoice;
+                    if (continueChoice == 1) {
+                        continueExecution = true;
+                        choice = 0; // Reset choice to force re-entry to the switch statement
+                    }
+                    else if (continueChoice == 2)
+                        continueExecution = false;
+                    else {
+                        cout << "Invalid choice. Exiting..." << endl;
+                        continueExecution = false;
+                    }
                 break;
             case 7:
                 system("cls");
-                cout << "\033[1;31mExiting..." << endl;
+                std::cout << "\033[1;33mYou chose Modify a To-do" << endl;
+                TodoList_table(data,keys);
+                modifyTodo(data, keys);
+                    cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    cin >> continueChoice;
+                    cin.ignore();
+                while (continueChoice == 3){
+                    system("cls");
+                    std::cout << "\033[1;33mYou chose Modify a To-do" << endl;
+                    TodoList_table(data,keys);
+                    modifyTodo(data, keys);
+                    cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    cin >> continueChoice;
+                    cin.ignore();
+                }
+                if (continueChoice == 1) {
+                        continueExecution = true;
+                        choice = 0; // Reset choice to force re-entry to the switch statement
+                    }
+                    else if (continueChoice == 2)
+                        continueExecution = false;
+                    else {
+                        cout << "Invalid choice. Exiting..." << endl;
+                        continueExecution = false;
+                    }
+                break;
+            case 8:
+                system("cls");
+                std::cout << "\033[1;31mExiting..." << endl;
                 exit(EXIT_SUCCESS);
                 break;
             default:
@@ -90,20 +199,7 @@ int main() {
                 delay(1.5);
                 continue;
         }
-        
-        cout << "Would you like to:\n1. Go to Menu\n2. End\nYour choice: ";
-        int continueChoice;
-        cin >> continueChoice;
-        if (continueChoice == 1) {
-            continueExecution = true;
-            choice = 0; // Reset choice to force re-entry to the switch statement
-        }
-        else if (continueChoice == 2)
-            continueExecution = false;
-        else {
-            cout << "Invalid choice. Exiting..." << endl;
-            continueExecution = false;
-        }
+        cin.ignore();
     } while(continueExecution);
 
     return 0;

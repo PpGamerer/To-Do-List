@@ -47,6 +47,11 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     string input;
     std::cout << "\033[1;32mEnter ID: ";
     std::getline(cin, input);
+    while(input.empty()){
+            cout << "\033[1;32mPlease enter a ID." << endl;
+            std::cout << "\033[1;32mEnter ID: ";
+            std::getline(cin, input);
+        }
     newEntry.push_back(input);
 
     // Get user input for each field
@@ -211,41 +216,19 @@ vector<string> tokens(string text,string delimiter) { //แยกข้อมู
 }
 
 void reloadData(vector<map<string, string>>& data, const vector<string>& keys){
-    data.clear(); // Clear the data vector
+    data.clear(); //เคลียร์ไฟล์ data.csv
     string textline;
     ifstream read;
     read.open("data.csv");
-    getline(read,textline);  // Skip the header line
-
-    // Create a vector to hold pairs of timestamp and map
-    vector<pair<string, map<string, string>>> sortedData;
-
-    // Read each line from the file
-    while (getline(read, textline)) {
-        // Extract data for each row
-        vector<string> row = tokens(textline, ",");
+    getline(read,textline);  //บรรทัดแรก (หัวข้อประเภท)
+    vector<string> row;
+    while (getline(read, textline)) { // อ่านทีละแถวจนหมดไฟล์
+        row = tokens(textline, ",");  // Extract data for each row
         map<string, string> myMap;
-        // Create a map for each row
-        for (size_t i = 0; i < keys.size(); i++) {
-            myMap.insert(pair<string, string>(keys.at(i), row[i]));
+        for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
+            myMap.insert(pair<string, string>(keys.at(i), row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
         }
-        // Determine the timestamp of the task (assuming timestamp is stored in the "Timestamp" column)
-        string timestamp = myMap["Timestamp"];
-        // Store the pair of timestamp and map in the vector
-        sortedData.push_back(make_pair(timestamp, myMap));
+        data.push_back(myMap); 
     }
     read.close();
-
-    // Sort the vector based on the timestamp (latest entries first)
-    sort(sortedData.rbegin(), sortedData.rend());
-
-    // Sort the vector based on importance (important tasks first)
-    stable_partition(sortedData.begin(), sortedData.end(), [](const pair<string, map<string, string>>& p) {
-        return (p.second.find("!") != p.second.end() && p.second.at("!") == "!");
-    });
-
-    // Add the sorted data to the data vector
-    for (const auto& pair : sortedData) {
-        data.push_back(pair.second);
-    }
 }

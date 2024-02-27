@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <ctime>
+#include <windows.h>
 
 #include "menu.h"
 #include "viewtodo.h"
