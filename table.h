@@ -11,6 +11,7 @@ using namespace std;
 void TodoList_table(vector<map<string,string>> data, vector<string> keys);
 bool hasTextInColumn7(const std::string& row);
 void stablePartitionByColumn7(vector<map<string, string>>& data);
+void stablePartitionByColumn5(vector<map<string, string>>& data);
 
 void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //data เก็บ myMap ทุกแถวไว้, keys เก็บหัวข้อของทุกประเภทไว้อยู่
     size_t data_count = data.size(); //จำนวนแถวข้อมูลทั้งหมด(จำนวนmyMap)
@@ -72,3 +73,57 @@ void stablePartitionByColumn7(vector<map<string, string>>& data) {
         }
     });
 }
+
+/*bool compareDates(const string& date1, const string& date2) {
+    // แยกวันที่ออกเป็นวัน, เดือน, ปี
+    int day1, month1, year1;
+    int day2, month2, year2;
+    sscanf(date1.c_str(), "%d/%d/%d", &day1, &month1, &year1);
+    sscanf(date2.c_str(), "%d/%d/%d", &day2, &month2, &year2);
+
+    // เปรียบเทียบปี
+    if (year1 != year2) {
+        return year1 < year2;
+    }
+
+    // เปรียบเทียบเดือน
+    if (month1 != month2) {
+        return month1 < month2;
+    }
+
+    // เปรียบเทียบวัน
+    return day1 < day2;
+}
+
+void stablePartitionByColumn5(vector<map<string, string>>& data) {
+    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
+        return row.at("5") != "No date"; // Keep rows with dates
+    });
+
+    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
+        return row.at("5") != "Today"; // Keep rows with dates other than "Today"
+    });
+
+    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
+        return row.at("5") != "No date" && row.at("5") != "Today"; // Keep rows with actual dates
+    });
+
+    stable_partition(data.begin(), data.end(), [](const map<string, string>& row1, const map<string, string>& row2) {
+        return compareDates(row1.at("5"), row2.at("5")); // Sort by date
+    });
+}*/
+
+/*
+void stablePartitionByColumn5(vector<map<string, string>>& data) {
+    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
+    if (row.find("Today") != row.end()) {
+        return row.at("Today") == "Today"; // Move important entries to the front
+    }
+    else if (row.find("No date") != row.end()) {
+        return false; // Move important entries to the back
+    } else {
+        return true; // Maintain the order of non-important entries
+    }
+    });
+}
+*/
