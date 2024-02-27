@@ -171,7 +171,7 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
     // Search for undone tasks with the specified category or "no category"
     for (const auto& todo : data) {
         // Include tasks with the specified category or "no category" that are undone
-        if ((todo.at("Category") == categoryToFind || categoryToFind == "no category") && todo.at("Status") == "undone") {
+        if ((todo.at("Category") == categoryToFind) && todo.at("Status") == "undone") {
             categoryUndoneData.push_back(todo);
         }
     }
