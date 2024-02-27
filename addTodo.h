@@ -52,34 +52,13 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
             std::cout << "\033[1;32mEnter ID: ";
             std::getline(cin, input);
         }
+        
+    while (isDuplicateID(data, input)) {
+        cout << "\033[1;31mID already exists. Please enter a new ID.\n";
+        cout << "\033[1;32mEnter ID: ";
+        getline(cin, input);
+    }
     newEntry.push_back(input);
-
-    // Get user input for each field
-    if(isDuplicateID(data,input)){
-    for (const auto& key : keys) {
-        string input;
-        cout << "\033[1;32mEnter " << key << ": ";
-        std::getline(cin, input);
-
-        // Check for duplicate ID
-        if (key == "ID" && isDuplicateID(data, input)) {
-            cout << "\033[1;31mID already exists. Please enter a new ID.\n";
-            // Prompt for input again until a unique ID is entered
-            while (isDuplicateID(data, input)) {
-                cout << "\033[1;32mEnter " << key << ": ";
-                std::getline(cin, input);
-            }
-        }
-        newEntry.push_back(input);
-    }
-    // Add the new entry to the data vector
-    map<string, string> entryMap;
-    for(size_t i = 0; i < keys.size(); ++i) 
-    {
-        entryMap[keys[i]] = newEntry[i];
-    }
-    data.push_back(entryMap);
-    }
 
     std::cout << "\033[1;32mEnter Todo: ";
     getline(cin, input);
@@ -117,27 +96,31 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
                     // Get today's date
                     time_t now = time(0);
                     tm* ltm = localtime(&now);
-                    string today = to_string(1900 + ltm->tm_year) + "/" + to_string(1 + ltm->tm_mon) + "/" + to_string(ltm->tm_mday);
+                    string today = to_string(ltm->tm_mday) + "/" + to_string(1 + ltm->tm_mon) + "/" + to_string(1900 + ltm->tm_year);
+
                     newEntry.push_back(today);
                     break;
                 } else if (input == "no" || input == "n" || input == "N" || input == "No") {
-                    // Get user input for date
-                    cout << "\033[1;32mEnter the due date (dd/mm/yyyy): ";
-                    getline(cin, input);
-                    // Validate user input for date format
-                    vector<string> dateParts = tokens(input, "/");
-                    if (dateParts.size() == 3) {
-                        int day = stoi(dateParts[0]);   
-                        int month = stoi(dateParts[1]);
-                        int year = stoi(dateParts[2]);
-                        if (year >= 1900 && year <= 9999 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
-                            newEntry.push_back(input);
-                            break;
+                    while (true) 
+                    {
+                        // Get user input for date
+                        cout << "\033[1;32mEnter the due date (dd/mm/yyyy): ";
+                        getline(cin, input);
+                        // Validate user input for date format
+                        vector<string> dateParts = tokens(input, "/");
+                        if (dateParts.size() == 3) {
+                            int day = stoi(dateParts[0]);   
+                            int month = stoi(dateParts[1]);
+                            int year = stoi(dateParts[2]);
+                            if (year >= 1900 && year <= 9999 && month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+                                newEntry.push_back(input);
+                                break;
                         }
                     }
-                    cout << "\033[1;31mInvalid date format. Please enter date in dd/mm/yyyy format: ";
-                } else {
-                    cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n): ";
+                    cout << "\033[1;31mInvalid date format. Please enter date in dd/mm/yyyy format " << endl;
+                    } 
+                    break; 
+
                 }
                 getline(cin, input);
             }
@@ -162,7 +145,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
             // You can prompt the user similarly as for "Due Date" and store the input.
         }
     }
-
+    
     std::cout << "\033[1;32mAdd a Remarks? (y/n) : ";
     getline(cin, input);
     while(true){
