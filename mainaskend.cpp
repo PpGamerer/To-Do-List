@@ -52,7 +52,7 @@ int main() {
                 system("cls");
                 cout << "\033[1;33mYou chose View all To-do" << endl << "\033[1;33m" ;
                 findTodoUndone(data, keys);
-                    cout << "Would you like to:\n1. Go to Menu\n2. End\nYour choice: ";
+                   do{ cout << "Would you like to:\n1. Go to Menu\n2. End\nYour choice: ";
                     cin >> continueChoice;
                     if (continueChoice == 1) {
                         continueExecution = true;
@@ -61,15 +61,17 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "Invalid choice. Exiting..." << endl;
+                        cout << "Invalid choice. Again pleas..." << endl;
                         continueExecution = false;
                     }
+                    }while (continueChoice != 1 && continueChoice != 2);
                 break;
             
             case 2:
                 system("cls");
                 cout << "\033[1;33mYou chose View completed To-do" << endl;
                 findTodoDone(data, keys);
+                   do{
                     cout << "Would you like to:\n1. Go to Menu\n2. End\nYour choice: ";
                     cin >> continueChoice;
                     if (continueChoice == 1) {
@@ -79,9 +81,10 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "Invalid choice. Exiting..." << endl;
+                        cout << "Invalid choice. Again pleas..." << endl;
                         continueExecution = false;
                     }
+                    }while (continueChoice != 1 && continueChoice != 2);
                 break;
             
             case 3:
@@ -90,10 +93,10 @@ int main() {
                 cout << "\033[1;33mYou chose View all To-do from category" << endl;
                 displayAvailableCategories(data);
                 findTodoByCategory(data, keys, selectCategory(data));
+                    do{
                     cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cin >> continueChoice;
                     cin.ignore();
-                }while (continueChoice == 3);
                     if (continueChoice == 1) {
                         continueExecution = true;
                         choice = 0; // Reset choice to force re-entry to the switch statement
@@ -101,9 +104,11 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "Invalid choice. Exiting..." << endl;
+                        cout << "Invalid choice. Again pleas..." << endl;
                         continueExecution = false;
                     }
+                    }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
+                }while (continueChoice == 3);
                 break;
 
             case 4:
@@ -111,10 +116,10 @@ int main() {
                 system("cls");
                 cout << "\033[1;33mYou chose Add new To-do" << endl;
                 getUserInput(data,keys);
-                cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                do{
+                    cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cin >> continueChoice;
                     cin.ignore();
-                }while (continueChoice == 3);
                     if (continueChoice == 1) {
                         continueExecution = true;
                         choice = 0; // Reset choice to force re-entry to the switch statement
@@ -125,6 +130,8 @@ int main() {
                         cout << "Invalid choice. Exiting..." << endl;
                         continueExecution = false;
                     }
+                    }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
+                }while (continueChoice == 3); 
                 break;
 
             case 5:
@@ -134,11 +141,9 @@ int main() {
                 TodoList_table(data,keys);
                 deleteTodo("data.csv", data, keys, selectIDToDelete(data));
                 TodoList_table(data,keys);
-                cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                do {cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cin >> continueChoice;
                     cin.ignore();
-                }while (continueChoice == 3);
-                    
                     if (continueChoice == 1) {
                         continueExecution = true;
                         choice = 0; // Reset choice to force re-entry to the switch statement
@@ -149,6 +154,8 @@ int main() {
                         cout << "Invalid choice. Exiting..." << endl;
                         continueExecution = false;
                     }
+                }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
+                }while (continueChoice == 3);
                 break;
 
             case 6:
@@ -157,11 +164,10 @@ int main() {
                 cout << "\033[1;33mYou chose Mark as completed" << endl;
                 findTodoUndone(data, keys);
                 updateStatus(data, selectIDToMark(data), keys);
-                    cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    do{cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cin >> continueChoice;
                     cin.ignore();
-                  }while (continueChoice == 3);
-                  if (continueChoice == 1) {
+                    if (continueChoice == 1) {
                         continueExecution = true;
                         choice = 0; // Reset choice to force re-entry to the switch statement
                     }
@@ -171,6 +177,8 @@ int main() {
                         cout << "Invalid choice. Exiting..." << endl;
                         continueExecution = false;
                     }
+                }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
+                }while (continueChoice == 3);
                 break;
 
             case 7:
@@ -179,12 +187,10 @@ int main() {
                 std::cout << "\033[1;33mYou chose Modify a To-do" << endl;
                 TodoList_table(data,keys);
                 modifyTodo(data, keys);
-                    cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    do{cout << "Would you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cin >> continueChoice;
                     cin.ignore();
-                  }while (continueChoice == 3);
-                
-                if (continueChoice == 1) {
+                    if (continueChoice == 1) {
                         continueExecution = true;
                         choice = 0; // Reset choice to force re-entry to the switch statement
                     }
@@ -194,7 +200,10 @@ int main() {
                         cout << "Invalid choice. Exiting..." << endl;
                         continueExecution = false;
                     }
+                    }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
+                  }while (continueChoice == 3);
                 break;
+                
             case 8:
                 system("cls");
                 std::cout << "\033[1;31mExiting..." << endl;
