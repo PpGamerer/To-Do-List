@@ -46,21 +46,27 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     // Get user input for each field
     string input;
     std::cout << "\033[1;32mEnter ID: ";
-    std::getline(cin, input);
+    cout << "\033[1;37m";
+    cout << "\033[1;37m";std::
+    getline(cin, input);
     while(input.empty()){
             cout << "\033[1;32mPlease enter a ID." << endl;
             std::cout << "\033[1;32mEnter ID: ";
-            std::getline(cin, input);
+            cout << "\033[1;37m";
+            cout << "\033[1;37m";std::
+            getline(cin, input);
         }
         
     while (isDuplicateID(data, input)) {
         cout << "\033[1;31mID already exists. Please enter a new ID.\n";
         cout << "\033[1;32mEnter ID: ";
+        cout << "\033[1;37m";
         getline(cin, input);
     }
     newEntry.push_back(input);
 
     std::cout << "\033[1;32mEnter Todo: ";
+    cout << "\033[1;37m";
     getline(cin, input);
     newEntry.push_back(input);
 
@@ -68,10 +74,12 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     newEntry.push_back(input);
 
     std::cout << "\033[1;32mAdd a Category? (y/n) : ";
+    cout << "\033[1;37m";
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
     std::cout << "\033[1;32mEnter Category: ";
+    cout << "\033[1;37m";
     getline(cin, input);
     newEntry.push_back(input);
     break;
@@ -81,16 +89,42 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
         break;
     }
         cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
+        cout << "\033[1;37m";
         getline(cin, input);
     }
 
     cout << "\033[1;32mAdd a Due Date? (y/n): ";
+    cout << "\033[1;37m";
     getline(cin, input);
     while (true) {
         if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
             // Ask whether to use today's date
             cout << "\033[1;32mUse today's date? (y/n): ";
+            cout << "\033[1;37m";
             getline(cin, input);
+            while(true){
+                if(input == "yes" || input == "y" || input == "Y" || input == "Yes")
+                {
+                    /*std::cout << "\033[1;32mEnter Category: ";
+                    cout << "\033[1;37m";
+                    getline(cin, input);
+                    newEntry.push_back(input);*/
+                    break;
+                }
+                else if(input == "no" || input == "n" || input == "N" || input == "No")
+                {
+                    /*input = "No category";
+                    newEntry.push_back(input);*/
+                    break;
+                }
+                    cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
+                    cout << "\033[1;37m";
+                    getline(cin, input);
+            }
+
+
+
+
             while (true) {
                 if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
                     // Get today's date
@@ -105,6 +139,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
                     {
                         // Get user input for date
                         cout << "\033[1;32mEnter the due date (dd/mm/yyyy): ";
+                        cout << "\033[1;37m";
                         getline(cin, input);
                         // Validate user input for date format
                         vector<string> dateParts = tokens(input, "/");
@@ -122,6 +157,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
                     break; 
 
                 }
+                cout << "\033[1;37m";
                 getline(cin, input);
             }
             break;
@@ -131,6 +167,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
             break;
         }
         cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n): ";
+        cout << "\033[1;37m";
         getline(cin, input);
     }
 
@@ -147,10 +184,12 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     }
     
     std::cout << "\033[1;32mAdd a Remarks? (y/n) : ";
+    cout << "\033[1;37m";
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
     std::cout << "\033[1;32mEnter Remarks: ";
+    cout << "\033[1;37m";
     getline(cin, input);
     newEntry.push_back(input);
     break;
@@ -160,10 +199,12 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
         break;
     }
         cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
+        cout << "\033[1;37m";
         getline(cin, input);
     }
     
     std::cout << "\033[1;32mMark as important? (y/n) : ";
+    cout << "\033[1;37m";
     getline(cin, input);
     while(true){
     if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
@@ -176,6 +217,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
         break;
     }
         cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : ";
+        cout << "\033[1;37m";
         getline(cin, input);
     }
 

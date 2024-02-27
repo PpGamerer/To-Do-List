@@ -23,13 +23,16 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
         // Get user input for each field
         map<string, string> newEntry;
         std::cout << "\033[1;32mEnter ID: ";
+        cout << "\033[1;37m";
         getline(cin, newEntry["ID"]);
 
         cout << "\033[1;32mEnter Todo: ";
+        cout << "\033[1;37m";
         getline(cin, newEntry["Todo"]);
 
     cout << "\033[1;32mStatus is done? (y/n): ";
     do {
+    cout << "\033[1;37m";
     getline(cin, input);
     if (input == "y" || input == "Y") {
         newEntry["Status"] = "done";
@@ -45,9 +48,11 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
 
         cout << "\033[1;32mAdd a Category? (y/n): ";
         do{
+        cout << "\033[1;37m";
         getline(cin, input);
         if (input == "y" || input == "Y") {
             cout << "\033[1;32mEnter Category: ";
+            cout << "\033[1;37m";
             getline(cin, newEntry["Category"]);
             break;
         } else if (input == "no" || input == "n" || input == "N" || input == "No") {
@@ -61,9 +66,11 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
 
         cout << "\033[1;32mAdd a Due Date? (y/n): ";
         do{
+        cout << "\033[1;37m";
         getline(cin, input);
         if (input == "y" || input == "Y" ) {
             cout << "\033[1;32mEnter Due Date (y/m/d): ";
+            cout << "\033[1;37m";
             getline(cin, newEntry["Due Date"]);
             break;
         } else if (input == "no" || input == "n" || input == "N" || input == "No") {
@@ -77,9 +84,11 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
 
         cout << "\033[1;32mAdd Remarks? (y/n): ";
         do{
+        cout << "\033[1;37m";
         getline(cin, input);
         if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
             cout << "\033[1;32mEnter Remarks: ";
+            cout << "\033[1;37m";
             getline(cin, newEntry["Remarks"]);
             break;
         } else if (input == "no" || input == "n" || input == "N" || input == "No"){
@@ -93,6 +102,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
 
         cout << "\033[1;32mMark as important? (y/n): ";
         do{
+        cout << "\033[1;37m";
         getline(cin, input);
         if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
         newEntry["!"] = "!";
@@ -142,6 +152,7 @@ string selectIDToModify(const vector<map<string, string>>& data) {
     bool idFound = false;
     do {
         cout << "\033[1;32mEnter ID of the To-Do you want to modify: ";
+        cout << "\033[1;37m";
         getline(cin, findIDTomodify);
          if (findIDTomodify.empty()) {
             cout << "\033[1;32mPlease enter an exist ID." << endl;

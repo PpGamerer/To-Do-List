@@ -16,6 +16,7 @@ string selectIDToMark(const vector<map<string, string>>& data) {
     bool idFound = false;
     do {
         cout << "\033[1;32mEnter the ID of the task you want to mark as done: ";
+        cout << "\033[1;37m";
         getline(cin, taskId);
          if (taskId.empty()) {
             cout << "\033[1;32mPlease enter an exist ID." << endl;

@@ -16,6 +16,7 @@ string selectIDToDelete(const vector<map<string, string>>& data) {
     bool idFound = false;
     do {
         cout << "\033[1;32mEnter ID of the To-Do entry you want to delete: ";
+        cout << "\033[1;37m";
         getline(cin, findIDToDelete);
          if (findIDToDelete.empty()) {
             cout << "\033[1;32mPlease enter an exist ID." << endl;

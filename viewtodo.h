@@ -116,7 +116,7 @@ void findTodoUndone(const vector<map<string, string>>& data, const vector<string
 }
 
 void displayAvailableCategories(const vector<map<string, string>>& data) {
-    cout << "Categories available:" << endl;
+    cout << "\033[1;34mCategories available:" << endl;
     set<string> categories; // Use a set to avoid duplicates
     for (const auto& todo : data) {
         if (todo.at("Status") == "undone") { // Check if the task is undone
@@ -124,7 +124,7 @@ void displayAvailableCategories(const vector<map<string, string>>& data) {
         }
     }
     for (const auto& category : categories) {
-        cout << " - " << category << endl;
+        cout << " \033[1;36m- " << category << endl;
     }
 }
 
@@ -134,6 +134,7 @@ string selectCategory(const vector<map<string, string>>& data) {
     bool categoryFound = false;
     do {
         cout << "\033[1;32mEnter the category: ";
+        cout << "\033[1;37m" ; 
         getline(cin, findcategory);
         // Convert the user input to lowercase
         transform(findcategory.begin(), findcategory.end(), findcategory.begin(), ::tolower);
@@ -192,7 +193,7 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
         }
     }
 
-    cout << "Number of tasks found: " << categoryUndoneData.size() << endl; // Debug print
+    cout << "\033[1;32mNumber of tasks found: " << categoryUndoneData.size() << endl; // Debug print
 
     // Display the tasks found
     if (categoryUndoneData.empty()) {
