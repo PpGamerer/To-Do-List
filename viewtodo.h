@@ -17,6 +17,7 @@ void displayAvailableCategories(const vector<map<string, string>>& data);
 string selectCategory(const vector<map<string, string>>& data);
 void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& category); // Added category parameter
 
+
 // Function to display Todo List table
 void TodoList_table(vector<map<string, string>> doneData, vector<map<string, string>> undoneData, vector<string> keys)
 {
@@ -83,6 +84,7 @@ void TodoList_table(vector<map<string, string>> doneData, vector<map<string, str
 
 }
 
+
 void findTodoDone(const vector<map<string, string>>& data, const vector<string>& keys)
 {
     vector<map<string, string>> doneData;
@@ -126,6 +128,7 @@ void displayAvailableCategories(const vector<map<string, string>>& data) {
     }
 }
 
+
 string selectCategory(const vector<map<string, string>>& data) {
     string findcategory;
     bool categoryFound = false;
@@ -161,6 +164,7 @@ string selectCategory(const vector<map<string, string>>& data) {
     return findcategory;
 }
 
+
 void findTodoByCategory(const vector<map<string, string>>& data, const vector<string>& keys, const string& categoryToFind) {          
     vector<map<string, string>> categoryUndoneData; // Vector to store undone tasks in the specified category
 
@@ -171,6 +175,7 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
             categoryUndoneData.push_back(todo);
         }
     }
+
     // Display the tasks found
     if (categoryUndoneData.empty()) {
         cout << "\033[1;31mNo undone tasks found for category: " << categoryToFind << endl;
@@ -178,4 +183,3 @@ void findTodoByCategory(const vector<map<string, string>>& data, const vector<st
         TodoList_table(categoryUndoneData, vector<map<string, string>>(), keys);
     }
 }
-
