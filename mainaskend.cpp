@@ -127,7 +127,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "Invalid choice. Exiting..." << endl;
+                        cout << "Invalid choice. Again pleas..." << endl;
                         continueExecution = false;
                     }
                     }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
@@ -151,7 +151,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "Invalid choice. Exiting..." << endl;
+                        cout << "Invalid choice. Again pleas..." << endl;
                         continueExecution = false;
                     }
                 }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
@@ -174,7 +174,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "Invalid choice. Exiting..." << endl;
+                        cout << "Invalid choice. Again pleas..." << endl;
                         continueExecution = false;
                     }
                 }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
@@ -197,7 +197,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "Invalid choice. Exiting..." << endl;
+                        cout << "Invalid choice. Again pleas..." << endl;
                         continueExecution = false;
                     }
                     }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
