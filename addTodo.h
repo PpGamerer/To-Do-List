@@ -92,7 +92,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     newEntry.push_back(input);
     break;
     }else if(input == "no" || input == "n" || input == "N" || input == "No"){
-        input = "Nocategory";
+        input = "No category";
         newEntry.push_back(input);
         break;
     }
