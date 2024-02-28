@@ -92,7 +92,7 @@ int main() {
                 break;
             default:
                 std::cout << "\033[1;31mInvalid choice. Please try again." << endl;
-                delay(1.5);
+                delay(1);
                 continue;
         }
         cin.ignore();

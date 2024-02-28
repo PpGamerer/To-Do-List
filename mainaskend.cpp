@@ -62,7 +62,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "\033[1;31mInvalid choice. Again pleas..." << endl;
+                        cout << "\033[1;31mInvalid choice. Again please..." << endl;
                         continueExecution = false;
                     }
                     }while (continueChoice != 1 && continueChoice != 2);
@@ -83,7 +83,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "\033[1;31mInvalid choice. Again pleas..." << endl;
+                        cout << "\033[1;31mInvalid choice. Again please..." << endl;
                         continueExecution = false;
                     }
                     }while (continueChoice != 1 && continueChoice != 2);
@@ -107,7 +107,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "\033[1;31mInvalid choice. Again pleas..." << endl;
+                        cout << "\033[1;31mInvalid choice. Again please..." << endl;
                         continueExecution = false;
                     }
                     }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
@@ -131,7 +131,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "\033[1;31mInvalid choice. Again pleas..." << endl;
+                        cout << "\033[1;31mInvalid choice. Again please..." << endl;
                         continueExecution = false;
                     }
                     }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
@@ -156,7 +156,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "\033[1;31mInvalid choice. Again pleas..." << endl;
+                        cout << "\033[1;31mInvalid choice. Again please..." << endl;
                         continueExecution = false;
                     }
                 }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
@@ -180,7 +180,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "\033[1;31mInvalid choice. Again pleas..." << endl;
+                        cout << "\033[1;31mInvalid choice. Again please..." << endl;
                         continueExecution = false;
                     }
                 }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
@@ -204,7 +204,7 @@ int main() {
                     else if (continueChoice == 2)
                         continueExecution = false;
                     else {
-                        cout << "\033[1;31mInvalid choice. Again pleas..." << endl;
+                        cout << "\033[1;31mInvalid choice. Again please..." << endl;
                         continueExecution = false;
                     }
                     }while (continueChoice != 1 && continueChoice != 2 && continueChoice != 3);
@@ -218,7 +218,7 @@ int main() {
                 break;
             default:
                 cout << "\033[1;31mInvalid choice. Please try again." << endl;
-                delay(1.5);
+                delay(1);
                 continue;
         }
     } while(continueExecution);
