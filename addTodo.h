@@ -22,7 +22,9 @@ void addTodo(const string& filename, const vector<string>& entry) {
         file << entry[i];
         if (i < entry.size()-1) {
             file << ","; //เพิ่ม , ถ้าไม่ใช่ข้อมูลสุดท้าย
-        }}
+        } else {
+            file << "\n"; }
+        }
     file << endl;
     file.close();
 
