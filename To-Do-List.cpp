@@ -40,6 +40,7 @@ int main() {
     int choice;
     bool continueExecution = true;
     do {
+        SortByColumn5(data);
         stablePartitionByColumn7(data);
         displayMenu();
         if (continueExecution) {

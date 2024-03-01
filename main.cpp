@@ -40,6 +40,7 @@ int main() {
     }
         int choice;
     do {
+        SortByColumn5(data);
         stablePartitionByColumn7(data);
         displayMenu();
         cin >> choice;
@@ -97,7 +98,7 @@ int main() {
         }
         cin.ignore();
         cin.get(); // รอกดEnter
-    } while(choice != 7);
+    } while(choice != 8);
     
     return 0;
 }

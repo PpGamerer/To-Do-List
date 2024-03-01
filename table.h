@@ -5,13 +5,15 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
+#include <set>
 using namespace std;
 
 //prototype functions
 void TodoList_table(vector<map<string,string>> data, vector<string> keys);
+bool compareDates(const std::string& date1, const std::string& date2);
+void SortByColumn5(vector<map<string, string>>& data);
 bool hasTextInColumn7(const std::string& row);
 void stablePartitionByColumn7(vector<map<string, string>>& data);
-void stablePartitionByColumn5(vector<map<string, string>>& data);
 
 void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //data เก็บ myMap ทุกแถวไว้, keys เก็บหัวข้อของทุกประเภทไว้อยู่
     size_t data_count = data.size(); //จำนวนแถวข้อมูลทั้งหมด(จำนวนmyMap)
@@ -30,13 +32,13 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
             cout << "\033[1;37m" << setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
         } 
     cout << endl;
-    stablePartitionByColumn7(data);
     //ประเภทข้อมูล(ข้อมูลแถวแรก)
     for (int i = 0; i < col_count; i++) {
         cout << "\033[1;33m" << setw(col_sizes[i]) << left << keys.at(i)  << "\033[1;37m" << "|";
     }
     cout << endl;
-
+    SortByColumn5(data);
+    stablePartitionByColumn7(data);
     //ขอบตารางและข้อมูลในตาราง --|--
     for (int i = 0; i < data_count; i++) {
         for (int j = 0; j < col_count; j++) {
@@ -53,6 +55,48 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
             cout << "\033[1;37m" <<  setw(col_sizes[i]) << setfill('-') << "" << setfill(' ') << "-";
         } 
     cout << endl << "\033[1;32m";
+}
+
+void SortByColumn5(vector<map<string, string>>& data) {
+    // Sorting the data vector of maps based on the values in "Due Date"
+    sort(data.begin(), data.end(), [](const map<string, string>& a, const map<string, string>& b) {
+        auto it_a = a.find("Due Date");
+        auto it_b = b.find("Due Date");
+        
+        // If "Due Date" is not found in either map, keep the order unchanged
+        if (it_a == a.end() || it_b == b.end()) {
+            return false;
+        }
+        
+        // If one of the maps has an empty value for "Due Date", it should come later
+        if (it_a->second.empty() || it_b->second.empty()) {
+            return !it_a->second.empty();
+        }
+        
+        // Compare the values in "Due Date" as dates
+        return compareDates(it_a->second, it_b->second);
+    });
+}
+bool compareDates(const std::string& date1, const std::string& date2) {
+    // Extract day, month, and year from date strings
+    int day1, month1, year1;
+    int day2, month2, year2;
+
+    sscanf(date1.c_str(), "%d/%d/%d", &day1, &month1, &year1);
+    sscanf(date2.c_str(), "%d/%d/%d", &day2, &month2, &year2);
+
+    // Compare years
+    if (year1 != year2) {
+        return year1 < year2;
+    }
+    // Compare months
+    else if (month1 != month2) {
+        return month1 < month2;
+    }
+    // Compare days
+    else {
+        return day1 < day2;
+    }
 }
 
 // ฟังก์ชันตรวจสอบว่าในคอลัมน์ที่ 7 มีข้อความหรือไม่
@@ -73,57 +117,3 @@ void stablePartitionByColumn7(vector<map<string, string>>& data) {
         }
     });
 }
-
-/*bool compareDates(const string& date1, const string& date2) {
-    // แยกวันที่ออกเป็นวัน, เดือน, ปี
-    int day1, month1, year1;
-    int day2, month2, year2;
-    sscanf(date1.c_str(), "%d/%d/%d", &day1, &month1, &year1);
-    sscanf(date2.c_str(), "%d/%d/%d", &day2, &month2, &year2);
-
-    // เปรียบเทียบปี
-    if (year1 != year2) {
-        return year1 < year2;
-    }
-
-    // เปรียบเทียบเดือน
-    if (month1 != month2) {
-        return month1 < month2;
-    }
-
-    // เปรียบเทียบวัน
-    return day1 < day2;
-}
-
-void stablePartitionByColumn5(vector<map<string, string>>& data) {
-    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
-        return row.at("5") != "No date"; // Keep rows with dates
-    });
-
-    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
-        return row.at("5") != "Today"; // Keep rows with dates other than "Today"
-    });
-
-    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
-        return row.at("5") != "No date" && row.at("5") != "Today"; // Keep rows with actual dates
-    });
-
-    stable_partition(data.begin(), data.end(), [](const map<string, string>& row1, const map<string, string>& row2) {
-        return compareDates(row1.at("5"), row2.at("5")); // Sort by date
-    });
-}*/
-
-/*
-void stablePartitionByColumn5(vector<map<string, string>>& data) {
-    stable_partition(data.begin(), data.end(), [](const map<string, string>& row) {
-    if (row.find("Today") != row.end()) {
-        return row.at("Today") == "Today"; // Move important entries to the front
-    }
-    else if (row.find("No date") != row.end()) {
-        return false; // Move important entries to the back
-    } else {
-        return true; // Maintain the order of non-important entries
-    }
-    });
-}
-*/
