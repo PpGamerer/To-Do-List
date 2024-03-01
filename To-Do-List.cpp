@@ -52,7 +52,7 @@ int main() {
                 system("cls");
                 cout << "\033[1;33mYou chose View all To-do" << endl << "\033[1;33m" ;
                 findTodoUndone(data, keys);
-                   do{ cout << "\033[1;32mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";
+                   do{ cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
                     if (continueChoice == 1) {
@@ -73,7 +73,7 @@ int main() {
                 cout << "\033[1;33mYou chose View completed To-do" << endl;
                 findTodoDone(data, keys);
                    do{
-                    cout << "\033[1;32mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";
+                    cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
                     if (continueChoice == 1) {
@@ -96,7 +96,7 @@ int main() {
                 displayAvailableCategories(data);
                 findTodoByCategory(data, keys, selectCategory(data));
                     do{
-                    cout << "\033[1;32mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
                     cin.ignore();
@@ -120,7 +120,7 @@ int main() {
                 cout << "\033[1;33mYou chose Add new To-do" << endl;
                 getUserInput(data,keys);
                 do{
-                    cout << "\033[1;32mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
                     cin.ignore();
@@ -145,7 +145,7 @@ int main() {
                 TodoList_table(data,keys);
                 deleteTodo("data.csv", data, keys, selectIDToDelete(data));
                 TodoList_table(data,keys);
-                do {cout << "\033[1;32mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                do {cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
                     cin.ignore();
@@ -169,7 +169,7 @@ int main() {
                 cout << "\033[1;33mYou chose Mark as completed" << endl;
                 findTodoUndone(data, keys);
                 updateStatus(data, selectIDToMark(data), keys);
-                    do{cout << "\033[1;32mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    do{cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
                     cin.ignore();
@@ -193,7 +193,7 @@ int main() {
                 std::cout << "\033[1;33mYou chose Modify a To-do" << endl;
                 TodoList_table(data,keys);
                 modifyTodo(data, keys);
-                    do{cout << "\033[1;32mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
+                    do{cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
                     cin.ignore();

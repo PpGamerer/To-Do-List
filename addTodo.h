@@ -49,13 +49,11 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     string input;
     std::cout << "\033[1;32mEnter ID: ";
     cout << "\033[1;37m";
-    cout << "\033[1;37m";std::
     getline(cin, input);
     while(input.empty()){
             cout << "\033[1;32mPlease enter a ID." << endl;
             std::cout << "\033[1;32mEnter ID: ";
             cout << "\033[1;37m";
-            cout << "\033[1;37m";std::
             getline(cin, input);
         }
         
