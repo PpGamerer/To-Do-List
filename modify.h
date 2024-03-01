@@ -25,12 +25,14 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
         while(newEntry.empty()){
             cout << "\033[1;32mPlease enter a ID." << endl;
             std::cout << "\033[1;32mEnter ID: ";
+            cout << "\033[1;37m";
             getline(cin, newEntry["ID"]);
         }
         
     while (isDuplicateID(data, newEntry["ID"])) {
         cout << "\033[1;31mID already exists. Please enter a new ID.\n";
         cout << "\033[1;32mEnter ID: ";
+        cout << "\033[1;37m";
         getline(cin, newEntry["ID"]);
     }
         cout << "\033[1;32mEnter Todo: ";
