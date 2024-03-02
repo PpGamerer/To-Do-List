@@ -71,7 +71,7 @@ int main() {
             
             case 2:
                 system("cls");
-                cout << "\033[1;33mYou chose View completed To-dos" << endl;
+                cout << "\033[1;33mYou chose View completed To-do" << endl;
                 findTodoDone(data, keys);
                    do{
                     cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";

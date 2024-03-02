@@ -53,7 +53,7 @@ int main() {
                 break;
             case 2:
                 system("cls");
-                std::cout << "\033[1;33mYou chose View completed To-dos" << endl;
+                std::cout << "\033[1;33mYou chose View completed To-do" << endl;
                 findTodoDone(data, keys);
                 break;
             case 3:
