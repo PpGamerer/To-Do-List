@@ -37,8 +37,6 @@ void TodoList_table(vector<map<string, string>> data,vector<string> keys) { //da
         cout << "\033[1;33m" << setw(col_sizes[i]) << left << keys.at(i)  << "\033[1;37m" << "|";
     }
     cout << endl;
-    SortByColumn5(data);
-    stablePartitionByColumn7(data);
     //ขอบตารางและข้อมูลในตาราง --|--
     for (int i = 0; i < data_count; i++) {
         for (int j = 0; j < col_count; j++) {

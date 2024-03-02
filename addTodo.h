@@ -9,25 +9,26 @@ using namespace std;
 
 //prototype functions
 vector<string> tokens(string text,string delimiter);
-void addTodo(const string& filename, const vector<string>& entry);
+void addTodo(const string& filename, const vector<string>& entry,vector<map<string, string>>& data,const vector<string>& keys);
 void getUserInput(vector<map<string, string>>& data, const vector<string>& keys);
-void reloadData(vector<map<string, string>>& data, const vector<string>& keys);
 bool isDuplicateID(const vector<map<string, string>>& data, const string& id);
 
-void addTodo(const string& filename, const vector<string>& entry) {
-    // Open the file in append mode
-    ofstream file(filename, ios::app);
+void addTodo(const string& filename, const vector<string>& entry,vector<map<string, string>>& data,const vector<string>& keys) {
+    ofstream file(filename, ios::app); //append
     // Write the entry to the file
     for (size_t i = 0; i < entry.size(); ++i) {
         file << entry[i];
-        if (i < entry.size()-1) {
+        if (i < entry.size()-1)
             file << ","; //เพิ่ม , ถ้าไม่ใช่ข้อมูลสุดท้าย
-        } else {
-            file << "\n"; }
         }
     file << endl;
     file.close();
-
+    
+    map<string, string> newMapEntry;
+    for (size_t i = 0; i < keys.size(); ++i) {
+        newMapEntry[keys[i]] = entry[i];
+    }
+    data.push_back(newMapEntry);
     std::cout << "\033[1;32mNew entry added to To-Do List successfully." << endl;
 }
 
@@ -222,8 +223,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     }
 
     // Add the new entry to the data.csv file
-    addTodo("data.csv", newEntry);
-    reloadData(data,keys);
+    addTodo("data.csv", newEntry, data, keys);
 }
 
 //["ID", "All To Dos", "Status", "Category", "Due Date", "Remarks", "!"]
@@ -238,22 +238,4 @@ vector<string> tokens(string text,string delimiter) { //แยกข้อมู
     }
     key.push_back(text); //ข้อมูลสุดท้าย
     return key;
-}
-
-void reloadData(vector<map<string, string>>& data, const vector<string>& keys){
-    data.clear(); //เคลียร์ไฟล์ data.csv
-    string textline;
-    ifstream read;
-    read.open("data.csv");
-    getline(read,textline);  //บรรทัดแรก (หัวข้อประเภท)
-    vector<string> row;
-    while (getline(read, textline)) { // อ่านทีละแถวจนหมดไฟล์
-        row = tokens(textline, ",");  // Extract data for each row
-        map<string, string> myMap;
-        for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
-            myMap.insert(pair<string, string>(keys.at(i), row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
-        }
-        data.push_back(myMap); 
-    }
-    read.close();
 }
