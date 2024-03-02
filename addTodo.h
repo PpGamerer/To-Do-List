@@ -26,9 +26,9 @@ void addTodo(const string& filename, const vector<string>& entry,vector<map<stri
     
     map<string, string> newMapEntry;
     for (size_t i = 0; i < keys.size(); ++i) {
-        newMapEntry[keys[i]] = entry[i];
+        newMapEntry[keys.at(i)] = entry[i];  //ใส่ค่า entry[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
     }
-    data.push_back(newMapEntry);
+    data.push_back(newMapEntry); //ใส่ทุกคู่ลงใน data
     std::cout << "\033[1;32mNew entry added to To-Do List successfully." << endl;
 }
 
