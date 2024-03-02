@@ -48,23 +48,23 @@ int main() {
         switch(choice) {
             case 1:
                 system("cls");
-                std::cout << "\033[1;33mYou chose View all To-do" << endl << "\033[1;33m" ;
+                std::cout << "\033[1;33mYou chose View all To-dos" << endl << "\033[1;33m" ;
                 findTodoUndone(data, keys);
                 break;
             case 2:
                 system("cls");
-                std::cout << "\033[1;33mYou chose View completed To-do" << endl;
+                std::cout << "\033[1;33mYou chose View completed To-dos" << endl;
                 findTodoDone(data, keys);
                 break;
             case 3:
                 system("cls");
-                std::cout << "\033[1;33mYou chose View all To-do from category" << endl;
+                std::cout << "\033[1;33mYou chose View all To-dos from category" << endl;
                 displayAvailableCategories(data);
                 findTodoByCategory(data, keys, selectCategory(data));
                 break;
             case 4:
                 system("cls");
-                std::cout << "\033[1;33mYou chose Add new To-do" << endl;
+                std::cout << "\033[1;33mYou chose Add a new To-do" << endl;
                 getUserInput(data,keys);
                 break;
             case 5:

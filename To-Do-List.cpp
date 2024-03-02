@@ -51,7 +51,7 @@ int main() {
         switch(choice) {
             case 1:
                 system("cls");
-                cout << "\033[1;33mYou chose View all To-do" << endl << "\033[1;33m" ;
+                cout << "\033[1;33mYou chose View all To-dos" << endl << "\033[1;33m" ;
                 findTodoUndone(data, keys);
                    do{ cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";
                     cout << "\033[1;37m" ;
@@ -71,7 +71,7 @@ int main() {
             
             case 2:
                 system("cls");
-                cout << "\033[1;33mYou chose View completed To-do" << endl;
+                cout << "\033[1;33mYou chose View completed To-dos" << endl;
                 findTodoDone(data, keys);
                    do{
                     cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";
@@ -93,7 +93,7 @@ int main() {
             case 3:
                 do{
                 system("cls");
-                cout << "\033[1;33mYou chose View all To-do from category" << endl;
+                cout << "\033[1;33mYou chose View all To-dos from category" << endl;
                 displayAvailableCategories(data);
                 findTodoByCategory(data, keys, selectCategory(data));
                     do{
@@ -118,7 +118,7 @@ int main() {
             case 4:
                 do{
                 system("cls");
-                cout << "\033[1;33mYou chose Add new To-do" << endl;
+                cout << "\033[1;33mYou chose Add a new To-do" << endl;
                 getUserInput(data,keys);
                 do{
                     cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
