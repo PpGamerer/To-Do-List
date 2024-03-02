@@ -63,12 +63,24 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
         cout << "\033[1;32mEnter ID: ";
         cout << "\033[1;37m";
         getline(cin, input);
+        while(input.empty()){
+            cout << "\033[1;32mPlease enter a ID." << endl;
+            std::cout << "\033[1;32mEnter ID: ";
+            cout << "\033[1;37m";
+            getline(cin, input);
+        }
     }
     newEntry.push_back(input);
 
-    std::cout << "\033[1;32mEnter Todo: ";
+    std::cout << "\033[1;32mEnter To-do: ";
     cout << "\033[1;37m";
     getline(cin, input);
+    while(input.empty()){
+            cout << "\033[1;32mPlease enter a To-do." << endl;
+            std::cout << "\033[1;32mEnter To-do: ";
+            cout << "\033[1;37m";
+            getline(cin, input);
+        }
     newEntry.push_back(input);
 
     input = "undone"; //status default is "undone"
