@@ -183,18 +183,6 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
         cout << "\033[1;37m";
         getline(cin, input);
     }
-
-    // Add the new entry to the data vector
-    map<string, string> entryMap;
-    for (size_t i = 0; i < keys.size(); ++i) {
-        if (keys[i] == "Due Date") {
-            entryMap[keys[i]] = newEntry.empty() ? "No date" : newEntry[0];
-        } else {
-            // For other fields, you can prompt the user or use existing methods
-            // For example, you might have other fields like "Title", "Description", etc.
-            // You can prompt the user similarly as for "Due Date" and store the input.
-        }
-    }
     
     std::cout << "\033[1;32mAdd a Remarks? (y/n) : ";
     cout << "\033[1;37m";
