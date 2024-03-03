@@ -33,7 +33,7 @@ int main() {
         row = tokens(textline, ",");  //delimiter = ","
         myMap.clear(); //เคลียร์mapก่อนpair
         for (size_t i = 0; i < keys.size(); i++) { //ทำจนครบทุกคอลัมน์
-            myMap.insert(pair<string, string>(keys.at(i), row[i])); //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
+            myMap[keys.at(i)] = row[i]; //ใส่ค่า row[i] ลงคู่กับ keys.at(i) ตามคอลัมน์
         }
         data.push_back(myMap); //ใส่ทุกคู่ลงใน data
     }
