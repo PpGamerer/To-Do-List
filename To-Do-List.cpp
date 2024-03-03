@@ -215,6 +215,7 @@ int main() {
             case 8:
                 system("cls");
                 std::cout << "\033[1;31mExiting..." << endl;
+                delay(1);
                 exit(EXIT_SUCCESS);
                 break;
             default:
