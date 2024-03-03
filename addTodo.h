@@ -35,7 +35,7 @@ void addTodo(const string& filename, const vector<string>& entry,vector<map<stri
 bool isDuplicateID(const vector<map<string, string>>& data, const string& id){ 
     for (const auto& entry : data) 
     {
-        if (entry.count("ID") && entry.at("ID") == id) 
+        if (entry.at("ID") == id) 
         {
             return true; // พบ ID ที่ซ้ำกัน
         }
