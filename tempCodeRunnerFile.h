@@ -1,1 +1,1 @@
-SortByColumn5
+<< setfill(' ') << "|";

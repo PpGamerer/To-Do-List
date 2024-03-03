@@ -115,7 +115,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
                     while (true) 
                     {
                         // Get user input for date
-                        cout << "\033[1;32mEnter the due date (dd/mm/yyyy): ";
+                        cout << "\033[1;32mEnter the due date (d/m/yyyy): ";
                         cout << "\033[1;37m";
                         getline(cin, input);
                         // Validate user input for date format
@@ -129,7 +129,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
                                 break;
                         }
                     }
-                    cout << "\033[1;31mInvalid date format. Please enter date in dd/mm/yyyy format " << endl;
+                    cout << "\033[1;31mInvalid date format. Please enter date in d/m/yyyy format " << endl;
                     } 
                     break; 
 
