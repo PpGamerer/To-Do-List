@@ -56,6 +56,8 @@ int main() {
                    do{ cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
+                    cin.clear();
+                    cin.ignore();
                     if (continueChoice == 1) {
                         continueExecution = true;
                         choice = 0; // Reset choice to force re-entry to the switch statement
@@ -77,6 +79,8 @@ int main() {
                     cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
+                    cin.clear();
+                    cin.ignore();
                     if (continueChoice == 1) {
                         continueExecution = true;
                         choice = 0; // Reset choice to force re-entry to the switch statement
@@ -100,6 +104,7 @@ int main() {
                     cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
+                    cin.clear();
                     cin.ignore();
                     if (continueChoice == 1) {
                         continueExecution = true;
@@ -124,6 +129,7 @@ int main() {
                     cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
+                    cin.clear();
                     cin.ignore();
                     if (continueChoice == 1) {
                         continueExecution = true;
@@ -149,6 +155,7 @@ int main() {
                 do {cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
+                    cin.clear();
                     cin.ignore();
                     if (continueChoice == 1) {
                         continueExecution = true;
@@ -173,6 +180,7 @@ int main() {
                     do{cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
+                    cin.clear();
                     cin.ignore();
                     if (continueChoice == 1) {
                         continueExecution = true;
@@ -197,6 +205,7 @@ int main() {
                     do{cout << "\033[1;33mWould you like to:\n1. Go to Menu\n2. End\n3. Do Again\nYour choice: ";
                     cout << "\033[1;37m" ;
                     cin >> continueChoice;
+                    cin.clear();
                     cin.ignore();
                     if (continueChoice == 1) {
                         continueExecution = true;
