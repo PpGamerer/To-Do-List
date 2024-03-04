@@ -90,13 +90,13 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     cout << "\033[1;37m";
     getline(cin, input);
     while(true){
-    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
+    if(input == "y" || input == "Y"){
     std::cout << "\033[1;32mEnter Category: ";
     cout << "\033[1;37m";
     getline(cin, input);
     newEntry.push_back(input);
     break;
-    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
+    }else if(input == "n" || input == "N"){
         input = "No category";
         newEntry.push_back(input);
         break;
@@ -110,13 +110,13 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     cout << "\033[1;37m";
     getline(cin, input);
     while (true) {
-        if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
+        if (input == "y" || input == "Y") {
             // Ask whether to use today's date
             cout << "\033[1;32mUse today's date? (y/n): ";
             cout << "\033[1;37m";
             getline(cin, input);
             while(true){
-                if(input == "yes" || input == "y" || input == "Y" || input == "Yes")
+                if(input == "y" || input == "Y")
                 {
                     /*std::cout << "\033[1;32mEnter Category: ";
                     cout << "\033[1;37m";
@@ -124,7 +124,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
                     newEntry.push_back(input);*/
                     break;
                 }
-                else if(input == "no" || input == "n" || input == "N" || input == "No")
+                else if(input == "n" || input == "N")
                 {
                     /*input = "No category";
                     newEntry.push_back(input);*/
@@ -139,7 +139,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
 
 
             while (true) {
-                if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
+                if (input == "y" || input == "Y") {
                     // Get today's date
                     time_t now = time(0);
                     tm* ltm = localtime(&now);
@@ -147,7 +147,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
 
                     newEntry.push_back(today);
                     break;
-                } else if (input == "no" || input == "n" || input == "N" || input == "No") {
+                } else if (input == "n" || input == "N") {
                     while (true) 
                     {
                         // Get user input for date
@@ -174,7 +174,7 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
                 getline(cin, input);
             }
             break;
-        } else if (input == "no" || input == "n" || input == "N" || input == "No") {
+        } else if (input == "n" || input == "N") {
             input = "No date";
             newEntry.push_back(input);
             break;
@@ -188,13 +188,13 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     cout << "\033[1;37m";
     getline(cin, input);
     while(true){
-    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
+    if(input == "y" || input == "Y"){
     std::cout << "\033[1;32mEnter Remarks: ";
     cout << "\033[1;37m";
     getline(cin, input);
     newEntry.push_back(input);
     break;
-    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
+    }else if(input == "n" || input == "N"){
         input = "None";
         newEntry.push_back(input);
         break;
@@ -208,11 +208,11 @@ void getUserInput(vector<map<string, string>>& data, const vector<string>& keys)
     cout << "\033[1;37m";
     getline(cin, input);
     while(true){
-    if(input == "yes" || input == "y" || input == "Y" || input == "Yes"){
+    if(input == "y" || input == "Y"){
         input = "!";
         newEntry.push_back(input);
         break;
-    }else if(input == "no" || input == "n" || input == "N" || input == "No"){
+    }else if(input == "n" || input == "N"){
         input = " ";
         newEntry.push_back(input);
         break;

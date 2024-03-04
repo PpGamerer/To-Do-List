@@ -46,11 +46,11 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
     if (input == "y" || input == "Y") {
         newEntry["Status"] = "done";
         break;
-    } else if (input == "no" || input == "n" || input == "N" || input == "No") {
+    } else if (input == "n" || input == "N") {
         newEntry["Status"] = "undone";
         break;
     } else {
-        cout << "\033[1;31mInvalid input." << endl;
+        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : " << endl;
         cout << "\033[1;32mStatus is done? (y/n): " ;
     }
 } while (true);
@@ -64,11 +64,11 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             cout << "\033[1;37m";
             getline(cin, newEntry["Category"]);
             break;
-        } else if (input == "no" || input == "n" || input == "N" || input == "No") {
+        } else if (input == "n" || input == "N") {
             newEntry["Category"] = "No category";
             break;
         }else {
-        cout << "\033[1;31mInvalid input." << endl;
+        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : " << endl;
         cout << "\033[1;32mAdd a Category? (y/n): ";
     }
         }while (true);
@@ -77,13 +77,13 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
         cout << "\033[1;37m";
         getline(cin, input);
         while (true) {
-        if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
+        if (input == "y" || input == "Y") {
             // Ask whether to use today's date
             cout << "\033[1;32mUse today's date? (y/n): ";
             cout << "\033[1;37m";
             getline(cin, input);
             while(true){
-                if(input == "yes" || input == "y" || input == "Y" || input == "Yes")
+                if(input == "y" || input == "Y")
                 {
                     /*std::cout << "\033[1;32mEnter Category: ";
                     cout << "\033[1;37m";
@@ -91,7 +91,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
                     newEntry.push_back(input);*/
                     break;
                 }
-                else if(input == "no" || input == "n" || input == "N" || input == "No")
+                else if(input == "n" || input == "N" )
                 {
                     /*input = "No category";
                     newEntry.push_back(input);*/
@@ -103,7 +103,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
             }
 
             while (true) {
-                if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
+                if (input == "y" || input == "Y") {
                     // Get today's date
                     time_t now = time(0);
                     tm* ltm = localtime(&now);
@@ -111,7 +111,7 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
 
                     newEntry["Due Date"] = today;
                     break;
-                } else if (input == "no" || input == "n" || input == "N" || input == "No") {
+                } else if (input == "n" || input == "N") {
                     while (true) 
                     {
                         // Get user input for date
@@ -137,14 +137,14 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
                 cout << "\033[1;37m";
                 getline(cin, newEntry["Due Date"]);
             } break;
-        } else if (input == "no" || input == "n" || input == "N" || input == "No") {
+        } else if (input == "n" || input == "N") {
             input = "No date";
             newEntry["Due Date"] = input;
             break;
         }
         cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n): ";
         cout << "\033[1;37m";
-        getline(cin, newEntry["Due Date"]);
+        getline(cin, input);
     }
 
 
@@ -152,16 +152,16 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
         do{
         cout << "\033[1;37m";
         getline(cin, input);
-        if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
+        if (input == "y" || input == "Y") {
             cout << "\033[1;32mEnter Remarks: ";
             cout << "\033[1;37m";
             getline(cin, newEntry["Remarks"]);
             break;
-        } else if (input == "no" || input == "n" || input == "N" || input == "No"){
+        } else if (input == "n" || input == "N"){
             newEntry["Remarks"] = "None";
             break;
         }else {
-        cout << "\033[1;31mInvalid input." << endl;
+        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : " << endl;
         cout << "\033[1;32mAdd Remarks? (y/n): ";
     }
         }while (true);
@@ -170,14 +170,14 @@ void modifyTodo(vector<map<string, string>>& data, const vector<string>& keys) {
         do{
         cout << "\033[1;37m";
         getline(cin, input);
-        if (input == "yes" || input == "y" || input == "Y" || input == "Yes") {
+        if (input == "y" || input == "Y") {
         newEntry["!"] = "!";
         break;
-        } else if (input == "no" || input == "n" || input == "N" || input == "No") {
+        } else if (input == "n" || input == "N") {
         newEntry["!"] = " ";
         break;
     } else {
-        cout << "\033[1;31mInvalid input." << endl;
+        cout << "\033[1;31mPlease enter only 'y' for yes or 'n' for no. (y/n) : " << endl;
         cout << "\033[1;32mMark as important? (y/n): " ;
     }
     } while (true);
