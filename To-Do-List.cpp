@@ -45,6 +45,7 @@ int main() {
         displayMenu();
         if (continueExecution) {
             cin >> choice;
+            cin.clear();
             cin.ignore();
         }
         int continueChoice;       

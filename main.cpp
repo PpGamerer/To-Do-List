@@ -44,6 +44,7 @@ int main() {
         stablePartitionByColumn7(data);
         displayMenu();
         cin >> choice;
+        cin.clear();
         cin.ignore();
         switch(choice) {
             case 1:
